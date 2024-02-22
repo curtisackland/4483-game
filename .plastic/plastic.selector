@@ -1,0 +1,4 @@
+repository "Shooter@CurtAck@cloud"
+  path "/"
+    br "/main"
+    co "/main"
