@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, Damageable
 {
 
     private StateMachine stateMachine;
@@ -36,6 +36,9 @@ public class Enemy : MonoBehaviour
     // for debugging
     [SerializeField]
     private string currentState;
+
+    [Header("Health")]
+    public float health = 100f;
     
     // Start is called before the first frame update
     void Start()
@@ -91,5 +94,15 @@ public class Enemy : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void Damage(float damageAmount)
+    {
+        health -= damageAmount;
+
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
