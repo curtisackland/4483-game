@@ -32,8 +32,7 @@ public class SpawnEnemies : MonoBehaviour
     void Update()
     {
         
-        // Check for deleted enemies and enemies that travel t
-        for (int i = 0; i <= enemies.Count; i++)
+        for (int i = 0; i < enemies.Count; i++)
         {
             // Remove deleted enemies from the list
             if (enemies[i] == null)
@@ -50,7 +49,7 @@ public class SpawnEnemies : MonoBehaviour
                 }
             }
         }
-        
+
         if (enemies.Count <= 3)
         {
             for (int i = 0; i < maxAmountOfEnemies - enemies.Count; i++)
