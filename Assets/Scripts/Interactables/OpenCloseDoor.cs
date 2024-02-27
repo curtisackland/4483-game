@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,5 +14,14 @@ public class OpenCloseDoor : Interactable
     {
         doorOpen = !doorOpen;
         door.GetComponent<Animator>().SetBool("IsOpen", doorOpen);
+
+        if (doorOpen)
+        {
+            promptMessage = "Close Door";
+        }
+        else
+        {
+            promptMessage = "Open Door";
+        }
     }
 }
