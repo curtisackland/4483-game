@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: AR
   m_EditorClassIdentifier: 
   name: Assault Rifle
-  damage: 10
+  damage: 100
   maxDistance: 500
-  currentAmmo: 797
+  currentAmmo: 10000
   magSize: 30
   fireRate: 600
   reloadTime: 1.5

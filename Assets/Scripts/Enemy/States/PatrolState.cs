@@ -7,6 +7,8 @@ public class PatrolState : BaseState
 
     public int waypointIndex;
     public float waitTimer;
+    
+    private float moveTimer;
     public override void Enter()
     {
         
@@ -28,6 +30,15 @@ public class PatrolState : BaseState
 
     public void PatrolCycle()
     {
+        moveTimer += Time.deltaTime;
+        if (moveTimer > Random.Range(3, 5))
+        {
+            // randomly move enemy while attacking
+            enemy.Agent().SetDestination(enemy.transform.position + (Random.insideUnitSphere * 10));
+            moveTimer = 0;
+        }
+        
+        /*
         if (enemy.Agent().remainingDistance < 0.2f)
         {
             waitTimer += Time.deltaTime;
@@ -46,5 +57,6 @@ public class PatrolState : BaseState
                 waitTimer = 0;
             }
         }
+        */
     }
 }

@@ -99,7 +99,7 @@ public class Enemy : MonoBehaviour, Damageable
     public void Damage(float damageAmount)
     {
         health -= damageAmount;
-
+        
         if (health <= 0)
         {
             Destroy(gameObject);
