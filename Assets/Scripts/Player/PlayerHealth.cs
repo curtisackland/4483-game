@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [Header("HealthXP Bar")]
+    [Header("Health Bar")]
     private float health;
 
     public float maxHealth = 100;
@@ -17,6 +18,8 @@ public class PlayerHealth : MonoBehaviour
     public Image frontHealthBar;
     
     public Image backHealthBar;
+
+    public TextMeshProUGUI healthAmountText;
 
     [Header("Damage Overlay")]
     public Image overlay;
@@ -36,6 +39,8 @@ public class PlayerHealth : MonoBehaviour
     void Update()
     {
         health = Mathf.Clamp(health, 0, maxHealth);
+        healthAmountText.text = health.ToString();
+        
         UpdateHealthUI();
         if (overlay.color.a > 0)
         {

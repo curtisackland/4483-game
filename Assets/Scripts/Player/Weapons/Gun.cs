@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,15 @@ public class Gun : MonoBehaviour
     [SerializeField]
     private GunData gunData;
 
+    public TextMeshProUGUI currentMagAmmo;
+
+    public TextMeshProUGUI maxMagAmmo;
+
+    public Slider reloadSlider;
+
     private float timeSinceLastShot;
+
+    private float reloadTimer = 0f;
 
     private bool CanShoot() => !gunData.reloading && timeSinceLastShot > 1f / (gunData.fireRate / 60f);
 
@@ -18,6 +27,8 @@ public class Gun : MonoBehaviour
     {
         PlayerShoot.shootInput += Shoot;
         PlayerShoot.reloadInput += StartReload;
+        maxMagAmmo.text = gunData.magSize.ToString();
+        reloadSlider.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -29,6 +40,8 @@ public class Gun : MonoBehaviour
     {
         if (!gunData.reloading)
         {
+            reloadTimer = 0;
+            reloadSlider.gameObject.SetActive(true);
             StartCoroutine(Reload());
         }
     }
@@ -37,9 +50,19 @@ public class Gun : MonoBehaviour
     {
         gunData.reloading = true;
 
-        yield return new WaitForSeconds(gunData.reloadTime);
+        while (reloadTimer < gunData.reloadTime)
+        {
+            reloadTimer += Time.deltaTime;
+            float progress = reloadTimer / gunData.reloadTime;
+            reloadSlider.value = Mathf.Lerp(0, gunData.reloadTime, progress);
+            yield return null;
+        }
+
+        //yield return new WaitForSeconds(gunData.reloadTime);
 
         gunData.currentAmmo = gunData.magSize;
+        currentMagAmmo.text = gunData.currentAmmo.ToString();
+        reloadSlider.gameObject.SetActive(false);
 
         gunData.reloading = false;
     }
@@ -71,6 +94,7 @@ public class Gun : MonoBehaviour
                 }
 
                 gunData.currentAmmo--;
+                currentMagAmmo.text = gunData.currentAmmo.ToString();
                 timeSinceLastShot = 0;
                 OnGunShot();
             }

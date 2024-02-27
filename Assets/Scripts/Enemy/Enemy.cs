@@ -37,8 +37,10 @@ public class Enemy : MonoBehaviour, Damageable
     [SerializeField]
     private string currentState;
 
-    [Header("Health")]
+    [Header("Health and XP Points")]
     public float health = 100f;
+
+    public float xpWorth = 40f;
     
     // Start is called before the first frame update
     void Start()
@@ -102,6 +104,7 @@ public class Enemy : MonoBehaviour, Damageable
         
         if (health <= 0)
         {
+            player.GetComponent<PlayerXP>().AddXP(xpWorth);
             Destroy(gameObject);
         }
     }
