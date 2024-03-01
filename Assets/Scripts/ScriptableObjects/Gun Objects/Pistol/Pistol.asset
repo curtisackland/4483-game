@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9cb8b24522f530479cd71fcb341dd54, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: 
-  name: Silenced Piston
+  name: Pistol
   damage: 25
   maxDistance: 500
-  currentAmmo: 1000
+  currentAmmo: 996
   magSize: 15
   fireRate: 300
   reloadTime: 1

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,12 @@ public class Gun : MonoBehaviour
     public TextMeshProUGUI maxMagAmmo;
 
     public Slider reloadSlider;
+
+    [SerializeField]
+    private ParticleSystem impactParticleSystem;
+
+    [SerializeField]
+    private TrailRenderer bulletTrail;
 
     private float timeSinceLastShot;
 
@@ -36,9 +43,17 @@ public class Gun : MonoBehaviour
         timeSinceLastShot += Time.deltaTime;
     }
 
+    private void OnDisable()
+    {
+        if (gunData != null)
+        {
+            gunData.reloading = false;
+        }
+    }
+
     public void StartReload()
     {
-        if (!gunData.reloading)
+        if (!gunData.reloading && gameObject.activeSelf)
         {
             reloadTimer = 0;
             reloadSlider.gameObject.SetActive(true);
@@ -75,6 +90,10 @@ public class Gun : MonoBehaviour
             {
                 if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, gunData.maxDistance))
                 {
+                    TrailRenderer trail = Instantiate(bulletTrail, transform.position, Quaternion.identity);
+
+                    StartCoroutine(SpawnTrail(trail, hitInfo));
+                    
                     Transform tf = hitInfo.transform;
                     while (tf != null)
                     {
@@ -88,9 +107,6 @@ public class Gun : MonoBehaviour
                         tf = tf.parent;
                         
                     }
-                    //hitInfo.transform.IsChildOf(Damageable);
-                    //Damageable damageable = hitInfo.transform.GetComponent<Damageable>();
-                    //damageable?.Damage(gunData.damage);
                 }
 
                 gunData.currentAmmo--;
@@ -99,6 +115,26 @@ public class Gun : MonoBehaviour
                 OnGunShot();
             }
         }
+    }
+
+    private IEnumerator SpawnTrail(TrailRenderer trail, RaycastHit hit)
+    {
+        float time = 0;
+
+        Vector3 startPosition = trail.transform.position;
+
+        while (time < 1)
+        {
+            trail.transform.position = Vector3.Lerp(startPosition, hit.point, time);
+            time = Time.deltaTime / trail.time;
+
+            yield return null;
+        }
+
+        trail.transform.position = hit.point;
+        Instantiate(impactParticleSystem, hit.point, Quaternion.LookRotation(hit.normal));
+        
+        Destroy(trail.gameObject, trail.time);
     }
 
     private void OnGunShot()
