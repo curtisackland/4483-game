@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
@@ -20,6 +22,8 @@ public class PlayerHealth : MonoBehaviour
     public Image backHealthBar;
 
     public TextMeshProUGUI healthAmountText;
+
+    public TextMeshProUGUI deathText;
 
     [Header("Damage Overlay")]
     public Image overlay;
@@ -83,6 +87,22 @@ public class PlayerHealth : MonoBehaviour
         health -= damage;
         lerpTimer = 0f;
         overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 0.5f);
+
+        if (health <= 0)
+        {
+            StartCoroutine(RestartGame(3f));
+        }
+    }
+
+    private IEnumerator RestartGame(float restartTime)
+    {
+        deathText.text = "You died! Restarting...";
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(restartTime);
+        Time.timeScale = 1;
+        health = maxHealth;
+        deathText.text = String.Empty;
+        SceneManager.LoadScene("MainScene");
     }
 
     public void RestoreHealth(float healAmount)

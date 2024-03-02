@@ -18,8 +18,9 @@ public class Gun : MonoBehaviour
 
     public Slider reloadSlider;
 
-    [SerializeField]
-    private ParticleSystem impactParticleSystem;
+    public Transform barrelPosition;
+    
+    public Transform ADSbarrelPosition;
 
     [SerializeField]
     private TrailRenderer bulletTrail;
@@ -27,6 +28,10 @@ public class Gun : MonoBehaviour
     private float timeSinceLastShot;
 
     private float reloadTimer = 0f;
+    
+    private LayerMask layerMask;
+
+    private ScopeIn gunScopeIn;
 
     private bool CanShoot() => !gunData.reloading && timeSinceLastShot > 1f / (gunData.fireRate / 60f);
 
@@ -36,6 +41,8 @@ public class Gun : MonoBehaviour
         PlayerShoot.reloadInput += StartReload;
         maxMagAmmo.text = gunData.magSize.ToString();
         reloadSlider.gameObject.SetActive(false);
+        layerMask = LayerMask.GetMask("Default", "Water", "Spawnable");
+        gunScopeIn = GetComponent<ScopeIn>();
     }
 
     private void Update()
@@ -73,8 +80,6 @@ public class Gun : MonoBehaviour
             yield return null;
         }
 
-        //yield return new WaitForSeconds(gunData.reloadTime);
-
         gunData.currentAmmo = gunData.magSize;
         currentMagAmmo.text = gunData.currentAmmo.ToString();
         reloadSlider.gameObject.SetActive(false);
@@ -88,9 +93,12 @@ public class Gun : MonoBehaviour
         {
             if (CanShoot())
             {
-                if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, gunData.maxDistance))
+
+                //Transform camTransform = transform.parent.parent.transform;
+                
+                if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, gunData.maxDistance, layerMask))
                 {
-                    TrailRenderer trail = Instantiate(bulletTrail, transform.position, Quaternion.identity);
+                    TrailRenderer trail = Instantiate(bulletTrail, gunScopeIn.isADS() ? ADSbarrelPosition.position : barrelPosition.position, Quaternion.identity);
 
                     StartCoroutine(SpawnTrail(trail, hitInfo));
                     
@@ -123,7 +131,7 @@ public class Gun : MonoBehaviour
 
         Vector3 startPosition = trail.transform.position;
 
-        while (time < 1)
+        while (time < 0.1)
         {
             trail.transform.position = Vector3.Lerp(startPosition, hit.point, time);
             time = Time.deltaTime / trail.time;
@@ -132,7 +140,7 @@ public class Gun : MonoBehaviour
         }
 
         trail.transform.position = hit.point;
-        Instantiate(impactParticleSystem, hit.point, Quaternion.LookRotation(hit.normal));
+        //Instantiate(impactParticleSystem, hit.point, Quaternion.LookRotation(hit.normal));
         
         Destroy(trail.gameObject, trail.time);
     }
