@@ -71,6 +71,10 @@ Combat:
 Menu:
 - ESC to bring up the pause menu
 
+## Challenges
+
+I am still a beginner with Unity so I was exposed to many new technologies through this project that I had to learn to put this prototype together. This took several days of work to put all together however I am happy with the results and it should be easy to add more features with how the project is setup. The most difficult challenge I had was making shooting look decent. I wanted to be able to aim down sites or hip fire with bullet tracers coming from the barrel of the gun while the actual raycast to hit enemies came from the main camera so it would point to where the player was actually looking. This was hard to line up between hip fire state and aim down site state all while making the animation look smooth between states. All the other features in the game required a learning curve but I am, for the most part, happy  with how they turned out for this prototype.
+
 ## Resources
 
 Med Kit:
