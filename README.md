@@ -62,6 +62,9 @@ Movement:
 - Shift to toggle sprint
 - Ctrl to toggle crouch
 
+Interact:
+- Use E to interact
+
 Combat:
 - Use mouse to aim
 - Left click to shoot
