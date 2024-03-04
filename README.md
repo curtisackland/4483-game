@@ -1,5 +1,7 @@
 # Apex Extermination Lone Operative
 
+Link to Github source code: https://github.com/curtisackland/4483-game
+
 ## Features in this Prototype
 
 This a horizontal slice of Apex Extermination: Lone Operative made in Unity. I have added a user interface for player stats (XP and health) and statuses, a custom open world, first person player movement mechanics, player combat mechanics with two types of weapons, and one type of enemy that has custom behaviour and spawning mechanics.
