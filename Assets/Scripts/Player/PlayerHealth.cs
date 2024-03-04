@@ -102,7 +102,7 @@ public class PlayerHealth : MonoBehaviour
         Time.timeScale = 1;
         health = maxHealth;
         deathText.text = String.Empty;
-        SceneManager.LoadScene("MainScene");
+        transform.SetPositionAndRotation(new Vector3(496.8852f, 1.175f, 524.1196f), new Quaternion(0, 180, 0, 1));
     }
 
     public void RestoreHealth(float healAmount)

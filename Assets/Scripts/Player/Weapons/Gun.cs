@@ -39,7 +39,6 @@ public class Gun : MonoBehaviour
     {
         PlayerShoot.shootInput += Shoot;
         PlayerShoot.reloadInput += StartReload;
-        maxMagAmmo.text = gunData.magSize.ToString();
         reloadSlider.gameObject.SetActive(false);
         layerMask = LayerMask.GetMask("Default", "Water", "Spawnable");
         gunScopeIn = GetComponent<ScopeIn>();
@@ -47,6 +46,8 @@ public class Gun : MonoBehaviour
 
     private void Update()
     {
+        currentMagAmmo.text = gunData.currentAmmo.ToString();
+        maxMagAmmo.text = gunData.magSize.ToString();
         timeSinceLastShot += Time.deltaTime;
     }
 
