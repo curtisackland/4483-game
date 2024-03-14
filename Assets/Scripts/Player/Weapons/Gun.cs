@@ -95,27 +95,26 @@ public class Gun : MonoBehaviour
             if (CanShoot())
             {
 
-                //Transform camTransform = transform.parent.parent.transform;
+                Transform camTransform = transform.parent.parent.transform;
+                Physics.Raycast(camTransform.position, camTransform.forward, out RaycastHit hitInfo, gunData.maxDistance,
+                    layerMask);
                 
-                if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, gunData.maxDistance, layerMask))
+                TrailRenderer trail = Instantiate(bulletTrail, gunScopeIn.isADS() ? ADSbarrelPosition.position : barrelPosition.position, Quaternion.identity);
+
+                StartCoroutine(SpawnTrail(trail, hitInfo));
+                
+                Transform tf = hitInfo.transform;
+                while (tf != null)
                 {
-                    TrailRenderer trail = Instantiate(bulletTrail, gunScopeIn.isADS() ? ADSbarrelPosition.position : barrelPosition.position, Quaternion.identity);
-
-                    StartCoroutine(SpawnTrail(trail, hitInfo));
-                    
-                    Transform tf = hitInfo.transform;
-                    while (tf != null)
+                    Damageable damageable = tf.GetComponent<Damageable>();
+                    if (damageable != null)
                     {
-                        Damageable damageable = tf.GetComponent<Damageable>();
-                        if (damageable != null)
-                        {
-                            damageable.Damage(gunData.damage);
-                            break;
-                        }
-
-                        tf = tf.parent;
-                        
+                        damageable.Damage(gunData.damage);
+                        break;
                     }
+
+                    tf = tf.parent;
+                    
                 }
 
                 gunData.currentAmmo--;
