@@ -131,7 +131,7 @@ public class Gun : MonoBehaviour
 
         Vector3 startPosition = trail.transform.position;
 
-        while (time < 0.1)
+        while (time < 0.01)
         {
             trail.transform.position = Vector3.Lerp(startPosition, hit.point, time);
             time = Time.deltaTime / trail.time;
