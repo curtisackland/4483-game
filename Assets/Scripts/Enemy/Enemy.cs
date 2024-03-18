@@ -41,6 +41,8 @@ public class Enemy : MonoBehaviour, Damageable
     public float health = 100f;
 
     public float xpWorth = 40f;
+
+    public float monsterPointsWorth = 5f;
     
     // Start is called before the first frame update
     void Start()
@@ -104,7 +106,9 @@ public class Enemy : MonoBehaviour, Damageable
         
         if (health <= 0)
         {
-            player.GetComponent<PlayerXP>().AddXP(xpWorth);
+            PlayerXP p = player.GetComponent<PlayerXP>();
+            p.AddXP(xpWorth);
+            p.AddMonsterPoints(monsterPointsWorth);
             Destroy(gameObject);
         }
     }
