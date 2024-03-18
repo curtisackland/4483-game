@@ -15,6 +15,8 @@ MonoBehaviour:
   name: Pistol
   damage: 25
   maxDistance: 500
+  bulletsPerShot: 1
+  bulletSpread: 0
   currentAmmo: 996
   magSize: 15
   fireRate: 300

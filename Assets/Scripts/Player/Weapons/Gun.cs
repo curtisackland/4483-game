@@ -94,29 +94,62 @@ public class Gun : MonoBehaviour
         {
             if (CanShoot())
             {
-
                 Transform camTransform = transform.parent.parent.transform;
-                Physics.Raycast(camTransform.position, camTransform.forward, out RaycastHit hitInfo, gunData.maxDistance,
-                    layerMask);
-                
-                TrailRenderer trail = Instantiate(bulletTrail, gunScopeIn.isADS() ? ADSbarrelPosition.position : barrelPosition.position, Quaternion.identity);
-
-                StartCoroutine(SpawnTrail(trail, hitInfo));
-                
-                Transform tf = hitInfo.transform;
-                while (tf != null)
+                if (gunData.bulletsPerShot == 1)
                 {
-                    Damageable damageable = tf.GetComponent<Damageable>();
-                    if (damageable != null)
+                    Physics.Raycast(camTransform.position, camTransform.forward, out RaycastHit hitInfo,
+                        gunData.maxDistance,
+                        layerMask);
+
+                    TrailRenderer trail = Instantiate(bulletTrail,
+                        gunScopeIn.isADS() ? ADSbarrelPosition.position : barrelPosition.position, Quaternion.identity);
+
+                    StartCoroutine(SpawnTrail(trail, hitInfo));
+
+                    Transform tf = hitInfo.transform;
+                    while (tf != null)
                     {
-                        damageable.Damage(gunData.damage);
-                        break;
+                        Damageable damageable = tf.GetComponent<Damageable>();
+                        if (damageable != null)
+                        {
+                            damageable.Damage(gunData.damage);
+                            break;
+                        }
+
+                        tf = tf.parent;
+
                     }
-
-                    tf = tf.parent;
-                    
                 }
+                else
+                {
+                    for (int i = 0; i < gunData.bulletsPerShot; i++)
+                    {
+                        Vector3 direction = Quaternion.Euler(UnityEngine.Random.Range(-gunData.bulletSpread, gunData.bulletSpread), UnityEngine.Random.Range(-gunData.bulletSpread, gunData.bulletSpread), 0) * camTransform.forward;
 
+                        Physics.Raycast(camTransform.position, direction, out RaycastHit hitInfo,
+                            gunData.maxDistance,
+                            layerMask);
+
+                        TrailRenderer trail = Instantiate(bulletTrail,
+                            gunScopeIn.isADS() ? ADSbarrelPosition.position : barrelPosition.position, Quaternion.identity);
+
+                        StartCoroutine(SpawnTrail(trail, hitInfo));
+
+                        Transform tf = hitInfo.transform;
+                        while (tf != null)
+                        {
+                            Damageable damageable = tf.GetComponent<Damageable>();
+                            if (damageable != null)
+                            {
+                                damageable.Damage(gunData.damage);
+                                break;
+                            }
+
+                            tf = tf.parent;
+
+                        }
+                    }
+                }
                 gunData.currentAmmo--;
                 currentMagAmmo.text = gunData.currentAmmo.ToString();
                 timeSinceLastShot = 0;
