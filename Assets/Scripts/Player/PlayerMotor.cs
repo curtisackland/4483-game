@@ -12,7 +12,12 @@ public class PlayerMotor : MonoBehaviour
     private float crouchTimer;
     private bool lerpCrouch;
     private bool sprinting;
-    
+    private float timer;
+    private float originalCameraYPosition;
+
+    public Camera firstPersonCamera;
+    public float bobbingSpeed = 14f;
+    public float bobbingAmount = 0.05f;
     public float speed = 5f;
     public float gravity = -9.8f;
     public float jumpHeight = 3f;
@@ -21,6 +26,7 @@ public class PlayerMotor : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        originalCameraYPosition = firstPersonCamera.transform.localPosition.y;
     }
 
     // Update is called once per frame
@@ -61,6 +67,19 @@ public class PlayerMotor : MonoBehaviour
         if (isGrounded && playerVelocity.y < 0)
             playerVelocity.y = -2f;
         controller.Move(playerVelocity * Time.deltaTime);
+        
+        if(Mathf.Abs(moveDirection.x) > 0.1f || Mathf.Abs(moveDirection.z) > 0.1f)
+        {
+            //Player is moving
+            timer += Time.deltaTime * bobbingSpeed;
+            firstPersonCamera.transform.localPosition = new Vector3(0, originalCameraYPosition + Mathf.Sin(timer) * bobbingAmount, 0);
+        }
+        else
+        {
+            //Idle
+            timer = 0;
+            firstPersonCamera.transform.localPosition = new Vector3(0, Mathf.Lerp(firstPersonCamera.transform.localPosition.y, originalCameraYPosition, Time.deltaTime * bobbingSpeed), 0);
+        }
     }
 
     public void Jump()
