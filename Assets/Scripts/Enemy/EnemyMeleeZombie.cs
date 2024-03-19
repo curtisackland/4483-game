@@ -6,11 +6,10 @@ public class EnemyMeleeZombie : EnemyMelee
     {
         if (!CanSeePlayer())
         {
-            stateMachine.ChangeState(new AttackState());
+            stateMachine.ChangeState(new PatrolState());
         }
         else
         {
-            animator.SetBool("isMoving", true);
             animator.SetBool("isRunning", true);
             animator.SetFloat("walkSpeedFactor", 1f);
             Agent().speed = 3.7f; // Based on animation
@@ -21,7 +20,6 @@ public class EnemyMeleeZombie : EnemyMelee
         if (lastAttackTimer < attackRate)
         {
             animator.SetBool("isAttacking", false);
-
         }
         else if ((transform.position - Player().transform.position).magnitude < attackDistance)
         {
@@ -29,7 +27,7 @@ public class EnemyMeleeZombie : EnemyMelee
             lastAttackTimer = 0;
             animator.SetBool("isAttacking", true);
         }
-        SetIsWalkingAnimation();
+        SetIsMovingAnimation();
     }
     
     public override void DoPatrolState()
@@ -43,18 +41,16 @@ public class EnemyMeleeZombie : EnemyMelee
         if (moveTimer > Random.Range(3, 5))
         {
             // randomly move enemy while attacking
-            animator.SetBool("isMoving", true);
             animator.SetBool("isRunning", false);
             animator.SetFloat("walkSpeedFactor", 1f);
             Agent().speed = 0.266f; // Based on animation
             Agent().SetDestination(transform.position + (Random.insideUnitSphere * 10));
             moveTimer = 0;
         }
-
-        SetIsWalkingAnimation();
+        SetIsMovingAnimation();
     }
 
-    private void SetIsWalkingAnimation()
+    private void SetIsMovingAnimation()
     {
         if (Agent().velocity.magnitude > 0.2f)
         {
@@ -62,7 +58,7 @@ public class EnemyMeleeZombie : EnemyMelee
         }
         else
         {
-            animator.SetBool("isMoving", true);
+            animator.SetBool("isMoving", false);
         }
     }
 }

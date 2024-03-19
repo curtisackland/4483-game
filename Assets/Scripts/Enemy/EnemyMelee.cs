@@ -8,9 +8,9 @@ public class EnemyMelee : Enemy
 
     protected float losePlayerTimer;
 
-    protected float attackDistance = 2;
-    protected float followDistance = 1;
-    protected float attackRate = 1;
+    public float attackDistance = 2;
+    public float followDistance = 1;
+    public float attackRate = 1;
     protected float lastAttackTimer;
 
     public override void DoAttackState()
