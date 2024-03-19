@@ -1,18 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour, Damageable
+public abstract class Enemy : MonoBehaviour, Damageable
 {
 
-    private StateMachine stateMachine;
+    protected StateMachine stateMachine;
     private NavMeshAgent agent;
     private Vector3 lastKnowPos;
 
     public Path path;
 
     private GameObject player;
+    
+    public Animator animator;
+
     
     public Vector3 LastKnowPos
     {
@@ -27,11 +31,7 @@ public class Enemy : MonoBehaviour, Damageable
 
     public float eyeHeight = 0.5f;
 
-    [Header("Weapon Values")]
-    public Transform gunBarrel;
 
-    [Range(0.1f, 10)]
-    public float fireRate;
     
     // for debugging
     [SerializeField]
@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour, Damageable
     public float xpWorth = 40f;
     
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         stateMachine = GetComponent<StateMachine>();
         agent = GetComponent<NavMeshAgent>();
@@ -52,7 +52,7 @@ public class Enemy : MonoBehaviour, Damageable
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         CanSeePlayer();
         currentState = stateMachine.activeState.ToString();
@@ -97,6 +97,12 @@ public class Enemy : MonoBehaviour, Damageable
 
         return false;
     }
+
+    public abstract void DoAttackState();
+
+    public abstract void DoPatrolState();
+
+    public abstract void DoSearchState();
 
     public void Damage(float damageAmount)
     {
