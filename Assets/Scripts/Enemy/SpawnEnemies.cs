@@ -76,7 +76,7 @@ public class SpawnEnemies : MonoBehaviour
                 float spawnValue = Random.value;
 
                 GameObject enemyChosen;
-                if (spawnValue < 0.5f || true)
+                if (spawnValue < 0.5f)
                 {
                     enemyChosen = enemyZombie;
                 }
