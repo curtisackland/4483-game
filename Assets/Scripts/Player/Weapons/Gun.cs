@@ -46,6 +46,8 @@ public class Gun : MonoBehaviour
 
     private GunRecoil gunRecoil;
 
+    private AudioSource gunshotAudio;
+
     private bool CanShoot() => !gunData.reloading && timeSinceLastShot > 1f / (gunData.fireRate / 60f);
 
     private void Start()
@@ -56,6 +58,7 @@ public class Gun : MonoBehaviour
         layerMask = LayerMask.GetMask("Default", "Water", "Spawnable");
         gunScopeIn = GetComponent<ScopeIn>();
         gunRecoil = GetComponent<GunRecoil>();
+        gunshotAudio = GetComponent<AudioSource>();
 
         // muzzle flash
         lightIntensity = muzzleFlashLight.intensity;
@@ -208,5 +211,8 @@ public class Gun : MonoBehaviour
         }
         muzzleFlashParticles.Play();
         muzzleFlashLight.intensity = lightIntensity;
+        
+        // Gunshot audio
+        gunshotAudio.Play();
     }
 }

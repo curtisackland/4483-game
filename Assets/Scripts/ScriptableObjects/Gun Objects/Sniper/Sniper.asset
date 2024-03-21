@@ -18,16 +18,19 @@ MonoBehaviour:
   bulletsPerShot: 1
   bulletSpread: 0
   bulletSpeed: 300
-  currentAmmo: 4
+  currentAmmo: 5
   magSize: 5
   fireRate: 100
   reloadTime: 1.5
-  hipFireRecoilX: -10
-  hipFireRecoilY: 2
-  hipFireRecoilZ: 0.35
-  adsRecoilX: -2
+  hipFireRecoilX: -15
+  hipFireRecoilY: 5
+  hipFireRecoilZ: 0.5
+  adsRecoilX: -7.5
   adsRecoilY: 2
-  adsRecoilZ: 0.35
+  adsRecoilZ: 0.25
   snappiness: 6
-  returnSpeed: 2
+  returnSpeed: 4
+  kickBackAmount: -0.5
+  kickBackSpeed: 10
+  gunReturnSpeed: 20
   reloading: 0
