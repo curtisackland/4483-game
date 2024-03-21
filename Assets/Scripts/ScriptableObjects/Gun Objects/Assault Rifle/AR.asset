@@ -18,7 +18,7 @@ MonoBehaviour:
   bulletsPerShot: 1
   bulletSpread: 0
   bulletSpeed: 200
-  currentAmmo: 28
+  currentAmmo: 26
   magSize: 30
   fireRate: 600
   reloadTime: 1.5
@@ -29,5 +29,8 @@ MonoBehaviour:
   adsRecoilY: 1
   adsRecoilZ: 0.3
   snappiness: 6
-  returnSpeed: 2
+  returnSpeed: 4
+  kickBackAmount: -0.5
+  kickBackSpeed: 10
+  gunReturnSpeed: 20
   reloading: 0
