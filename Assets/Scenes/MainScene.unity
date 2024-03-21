@@ -4383,6 +4383,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 4324196473742850659, guid: 7ce752b8b21e23d459907f126471c1a4, type: 3}
+  enemyZombie: {fileID: 3548923343394570356, guid: 88452c439693f5545960fa042361dcec, type: 3}
   maxSpawnRadius: 20
   minSpawnRadius: 15
   despawnRadius: 25

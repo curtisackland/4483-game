@@ -7,6 +7,7 @@ using UnityEngine;
 public class SpawnEnemies : MonoBehaviour
 {
     public GameObject enemy;
+    public GameObject enemyZombie;
 
     public float maxSpawnRadius = 25f;
 
@@ -52,7 +53,8 @@ public class SpawnEnemies : MonoBehaviour
 
         if (enemies.Count <= 3)
         {
-            for (int i = 0; i < maxAmountOfEnemies - enemies.Count; i++)
+            int oldNumEnemies = enemies.Count;
+            for (int i = 0; i < maxAmountOfEnemies - oldNumEnemies; i++)
             {
                 Vector3 randomPosition = Random.insideUnitSphere * maxSpawnRadius;
                 randomPosition += transform.position;
@@ -71,8 +73,20 @@ public class SpawnEnemies : MonoBehaviour
                     randomPosition += (randomPosition - transform.position).normalized * minSpawnRadius;
                 }
 
+                float spawnValue = Random.value;
+
+                GameObject enemyChosen;
+                if (spawnValue < 0.5f)
+                {
+                    enemyChosen = enemyZombie;
+                }
+                else
+                {
+                    enemyChosen = enemy;
+                }
+
                 // Spawn enemy at the random position
-                GameObject newEnemy = Instantiate(enemy, randomPosition, Quaternion.identity);
+                GameObject newEnemy = Instantiate(enemyChosen, randomPosition, Quaternion.identity);
                 
                 enemies.Add(newEnemy);
                 
