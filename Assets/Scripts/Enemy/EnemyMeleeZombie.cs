@@ -6,30 +6,43 @@ public class EnemyMeleeZombie : EnemyMelee
     {
         if (!CanSeePlayer())
         {
-            stateMachine.ChangeState(new PatrolState());
+            losePlayerTimer += Time.deltaTime;
+            if (losePlayerTimer > 8)
+            {
+                // Go back to search state
+                stateMachine.ChangeState(new SearchState());
+            }
         }
         else
         {
-            animator.SetBool("isRunning", true);
-            animator.SetFloat("walkSpeedFactor", 1f);
-            Agent().speed = 3.7f; // Based on animation
+            losePlayerTimer = 0;
+            SetRunningSpeed(2);
             Agent().SetDestination((transform.position - Player().transform.position).normalized * followDistance + Player().transform.position);
+            LastKnowPos = Player().transform.position;
+            lastAttackTimer += Time.deltaTime;
+            if (lastAttackTimer < attackRate)
+            {
+                animator.SetBool("isAttacking", false);
+            }
+            else if ((transform.position - Player().transform.position).magnitude < attackDistance)
+            {
+                // Check that the enemy can see the player
+                if (Physics.Raycast(transform.position, Player().transform.position - transform.position, out var hit))
+                {
+                    if (hit.transform == Player().transform)
+                    {
+                        Player().GetComponent<PlayerHealth>().TakeDamage(10);
+                        lastAttackTimer = 0;
+                        animator.SetBool("isAttacking", true);
+                    }
+                }
+            }
         }
 
-        lastAttackTimer += Time.deltaTime;
-        if (lastAttackTimer < attackRate)
-        {
-            animator.SetBool("isAttacking", false);
-        }
-        else if ((transform.position - Player().transform.position).magnitude < attackDistance)
-        {
-            Player().GetComponent<PlayerHealth>().TakeDamage(10);
-            lastAttackTimer = 0;
-            animator.SetBool("isAttacking", true);
-        }
+        
         SetIsMovingAnimation();
     }
-    
+
     public override void DoPatrolState()
     {
         if (CanSeePlayer())
@@ -41,14 +54,57 @@ public class EnemyMeleeZombie : EnemyMelee
         if (moveTimer > Random.Range(3, 5))
         {
             // randomly move enemy while attacking
-            animator.SetBool("isRunning", false);
-            animator.SetFloat("walkSpeedFactor", 1f);
-            Agent().speed = 0.266f; // Based on animation
-            Agent().SetDestination(transform.position + (Random.insideUnitSphere * 10));
+            SetWalkingSpeed(1);
+            if (Agent().isOnNavMesh)
+            {
+                Agent().SetDestination(transform.position + (Random.insideUnitSphere * 10));
+            }
             moveTimer = 0;
         }
         SetIsMovingAnimation();
     }
+    
+    public override void DoSearchState()
+    {
+        if (CanSeePlayer())
+        {
+            stateMachine.ChangeState(new AttackState());
+        }
+
+        if (Agent().remainingDistance < Agent().stoppingDistance)
+        {
+            searchTimer += Time.deltaTime;
+            moveTimer += Time.deltaTime;
+            if (moveTimer > Random.Range(3, 5))
+            {
+                SetWalkingSpeed(2);
+                // randomly move enemy while attacking
+                Agent().SetDestination(transform.position + (Random.insideUnitSphere * 10));
+                moveTimer = 0;
+            }
+            
+            if (searchTimer > 10)
+            {
+                stateMachine.ChangeState(new PatrolState());
+            }
+        }
+        SetIsMovingAnimation();
+    }
+    
+    private void SetWalkingSpeed(float multiplier)
+    {
+        animator.SetBool("isRunning", false);
+        animator.SetFloat("walkSpeedFactor", 1f * multiplier);
+        Agent().speed = 0.266f * multiplier; // Based on animation
+    }
+    
+    private void SetRunningSpeed(float multiplier)
+    {
+        animator.SetBool("isRunning", true);
+        animator.SetFloat("walkSpeedFactor", 1f * multiplier);
+        Agent().speed = 3.7f * multiplier; // Based on animation
+    }
+
 
     private void SetIsMovingAnimation()
     {

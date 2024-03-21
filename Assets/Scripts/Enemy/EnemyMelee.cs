@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class EnemyMelee : Enemy
 {
+    protected float searchTimer;
     protected float moveTimer;
-
-    protected float losePlayerTimer;
 
     public float attackDistance = 2;
     public float followDistance = 1;
@@ -50,6 +49,26 @@ public class EnemyMelee : Enemy
 
     public override void DoSearchState()
     {
-        throw new System.NotImplementedException();
+        if (CanSeePlayer())
+        {
+            stateMachine.ChangeState(new AttackState());
+        }
+
+        if (Agent().remainingDistance < Agent().stoppingDistance)
+        {
+            searchTimer += Time.deltaTime;
+            moveTimer += Time.deltaTime;
+            if (moveTimer > Random.Range(3, 5))
+            {
+                // randomly move enemy while attacking
+                Agent().SetDestination(transform.position + (Random.insideUnitSphere * 10));
+                moveTimer = 0;
+            }
+            
+            if (searchTimer > 10)
+            {
+                stateMachine.ChangeState(new PatrolState());
+            }
+        }
     }
 }

@@ -10,11 +10,10 @@ public class EnemyShooting : Enemy
     [Range(0.1f, 10)]
     public float fireRate;
     
-    private float moveTimer;
-
-    private float losePlayerTimer;
-
-    private float shotTimer;
+    protected float searchTimer;
+    protected float moveTimer;
+    
+    protected float shotTimer;
     
     // Start is called before the first frame update
     public override void Start()
@@ -101,7 +100,27 @@ public class EnemyShooting : Enemy
 
     public override void DoSearchState()
     {
-        throw new System.NotImplementedException();
+        if (CanSeePlayer())
+        {
+            stateMachine.ChangeState(new AttackState());
+        }
+
+        if (Agent().remainingDistance < Agent().stoppingDistance)
+        {
+            searchTimer += Time.deltaTime;
+            moveTimer += Time.deltaTime;
+            if (moveTimer > Random.Range(3, 5))
+            {
+                // randomly move enemy while attacking
+                Agent().SetDestination(transform.position + (Random.insideUnitSphere * 10));
+                moveTimer = 0;
+            }
+            
+            if (searchTimer > 10)
+            {
+                stateMachine.ChangeState(new PatrolState());
+            }
+        }
     }
 
     public void Shoot()

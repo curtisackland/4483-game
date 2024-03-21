@@ -10,6 +10,7 @@ public abstract class Enemy : MonoBehaviour, Damageable
     protected StateMachine stateMachine;
     private NavMeshAgent agent;
     private Vector3 lastKnowPos;
+    protected float losePlayerTimer;
 
     public Path path;
 
