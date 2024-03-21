@@ -17,8 +17,17 @@ MonoBehaviour:
   maxDistance: 500
   bulletsPerShot: 1
   bulletSpread: 0
-  currentAmmo: 30
+  bulletSpeed: 200
+  currentAmmo: 28
   magSize: 30
   fireRate: 600
   reloadTime: 1.5
+  hipFireRecoilX: -2
+  hipFireRecoilY: 2
+  hipFireRecoilZ: 0.35
+  adsRecoilX: -1.5
+  adsRecoilY: 1
+  adsRecoilZ: 0.3
+  snappiness: 6
+  returnSpeed: 2
   reloading: 0

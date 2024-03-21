@@ -16,9 +16,18 @@ MonoBehaviour:
   damage: 75
   maxDistance: 250
   bulletsPerShot: 8
-  bulletSpread: 10
+  bulletSpread: 3
+  bulletSpeed: 200
   currentAmmo: 10
   magSize: 10
   fireRate: 150
   reloadTime: 2
+  hipFireRecoilX: -2
+  hipFireRecoilY: 2
+  hipFireRecoilZ: 0.35
+  adsRecoilX: -2
+  adsRecoilY: 2
+  adsRecoilZ: 0.35
+  snappiness: 6
+  returnSpeed: 2
   reloading: 0
