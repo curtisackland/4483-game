@@ -22,8 +22,19 @@ public class Gun : MonoBehaviour
     
     public Transform ADSbarrelPosition;
 
+    public Light muzzleFlashLight;
+
+    public ParticleSystem muzzleFlashParticles;
+
+    private float lightIntensity;
+
+    [SerializeField] private float lightReturnSpeed = 10f;
+
     [SerializeField]
     private TrailRenderer bulletTrail;
+
+    [SerializeField]
+    private GameObject impactParticles;
 
     private float timeSinceLastShot;
 
@@ -32,6 +43,8 @@ public class Gun : MonoBehaviour
     private LayerMask layerMask;
 
     private ScopeIn gunScopeIn;
+
+    private GunRecoil gunRecoil;
 
     private bool CanShoot() => !gunData.reloading && timeSinceLastShot > 1f / (gunData.fireRate / 60f);
 
@@ -42,6 +55,11 @@ public class Gun : MonoBehaviour
         reloadSlider.gameObject.SetActive(false);
         layerMask = LayerMask.GetMask("Default", "Water", "Spawnable");
         gunScopeIn = GetComponent<ScopeIn>();
+        gunRecoil = GetComponent<GunRecoil>();
+
+        // muzzle flash
+        lightIntensity = muzzleFlashLight.intensity;
+        muzzleFlashLight.intensity = 0;
     }
 
     private void Update()
@@ -49,6 +67,7 @@ public class Gun : MonoBehaviour
         currentMagAmmo.text = gunData.currentAmmo.ToString();
         maxMagAmmo.text = gunData.magSize.ToString();
         timeSinceLastShot += Time.deltaTime;
+        muzzleFlashLight.intensity = Mathf.Lerp(muzzleFlashLight.intensity, 0, lightReturnSpeed * Time.deltaTime);
     }
 
     private void OnDisable()
@@ -94,59 +113,100 @@ public class Gun : MonoBehaviour
         {
             if (CanShoot())
             {
-
+                
                 Transform camTransform = transform.parent.parent.transform;
-                Physics.Raycast(camTransform.position, camTransform.forward, out RaycastHit hitInfo, gunData.maxDistance,
-                    layerMask);
-                
-                TrailRenderer trail = Instantiate(bulletTrail, gunScopeIn.isADS() ? ADSbarrelPosition.position : barrelPosition.position, Quaternion.identity);
+                for (int i = 0; i < gunData.bulletsPerShot; i++) {
+                    Vector3 direction = Quaternion.Euler(UnityEngine.Random.Range(-gunData.bulletSpread, gunData.bulletSpread), UnityEngine.Random.Range(-gunData.bulletSpread, gunData.bulletSpread), 0) * camTransform.forward;
 
-                StartCoroutine(SpawnTrail(trail, hitInfo));
-                
-                Transform tf = hitInfo.transform;
-                while (tf != null)
-                {
-                    Damageable damageable = tf.GetComponent<Damageable>();
-                    if (damageable != null)
+                    // If the bullet hit something
+                    if (Physics.Raycast(camTransform.position, direction, out RaycastHit hitInfo,
+                            gunData.maxDistance,
+                            layerMask))
                     {
-                        damageable.Damage(gunData.damage);
-                        break;
+                        TrailRenderer trail = Instantiate(bulletTrail,
+                            gunScopeIn.isADS() ? ADSbarrelPosition.position : barrelPosition.position, Quaternion.identity);
+
+                        StartCoroutine(SpawnTrail(trail, hitInfo.point, hitInfo.normal, true, hitInfo.collider.gameObject));
+
+                        Transform tf = hitInfo.transform;
+                        while (tf != null)
+                        {
+                            Damageable damageable = tf.GetComponent<Damageable>();
+                            if (damageable != null)
+                            {
+                                damageable.Damage(gunData.damage);
+                                break;
+                            }
+
+                            tf = tf.parent;
+
+                        } 
                     }
+                    // If the bullet did not hit something
+                    else
+                    {
+                        TrailRenderer trail = Instantiate(bulletTrail,
+                            gunScopeIn.isADS() ? ADSbarrelPosition.position : barrelPosition.position, Quaternion.identity);
 
-                    tf = tf.parent;
-                    
+                        StartCoroutine(SpawnTrail(trail, (gunScopeIn.isADS() ? ADSbarrelPosition.position : barrelPosition.position) + camTransform.forward * 200, Vector3.zero, false, null));
+                    }
                 }
-
+                
+                
                 gunData.currentAmmo--;
                 currentMagAmmo.text = gunData.currentAmmo.ToString();
                 timeSinceLastShot = 0;
+                gunRecoil.RecoilFire();
                 OnGunShot();
             }
         }
     }
 
-    private IEnumerator SpawnTrail(TrailRenderer trail, RaycastHit hit)
+    private IEnumerator SpawnTrail(TrailRenderer trail, Vector3 hit, Vector3 hitNormal, bool madeImpact, GameObject rayCollider)
     {
-        float time = 0;
-
+        // Bullet tracer travelling to target
         Vector3 startPosition = trail.transform.position;
+        float distance = Vector3.Distance(trail.transform.position, hit);
+        float remainingDistance = distance;
 
-        while (time < 0.1)
+        while (remainingDistance > 0)
         {
-            trail.transform.position = Vector3.Lerp(startPosition, hit.point, time);
-            time = Time.deltaTime / trail.time;
+            trail.transform.position = Vector3.Lerp(startPosition, hit, 1 - (remainingDistance / distance));
+
+            remainingDistance -= gunData.bulletSpeed * Time.deltaTime;
 
             yield return null;
         }
 
-        trail.transform.position = hit.point;
-        //Instantiate(impactParticleSystem, hit.point, Quaternion.LookRotation(hit.normal));
+        trail.transform.position = hit;
+
+        // if impact was made create an impact and make it attached to what it hit
+        if (madeImpact)
+        {
+            if (rayCollider != null)
+            {
+                GameObject impact = Instantiate(impactParticles, hit, Quaternion.LookRotation(hitNormal));
+                impact.transform.parent = rayCollider.transform;
+            }
+        }
         
         Destroy(trail.gameObject, trail.time);
     }
 
     private void OnGunShot()
     {
-        
+        // Muzzle flash
+        if (gunScopeIn.isADS())
+        {
+            muzzleFlashLight.transform.position = ADSbarrelPosition.transform.position;
+            muzzleFlashParticles.transform.position = ADSbarrelPosition.transform.position;
+        }
+        else
+        {
+            muzzleFlashLight.transform.position = barrelPosition.transform.position;
+            muzzleFlashParticles.transform.position = barrelPosition.transform.position;
+        }
+        muzzleFlashParticles.Play();
+        muzzleFlashLight.intensity = lightIntensity;
     }
 }

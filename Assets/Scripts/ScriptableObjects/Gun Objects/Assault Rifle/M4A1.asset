@@ -10,24 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9cb8b24522f530479cd71fcb341dd54, type: 3}
-  m_Name: AR
+  m_Name: M4A1
   m_EditorClassIdentifier: 
-  name: Assault Rifle
+  name: M4A1
   damage: 50
-  maxDistance: 500
+  maxDistance: 1000
   bulletsPerShot: 1
   bulletSpread: 0
-  bulletSpeed: 200
-  currentAmmo: 28
+  currentAmmo: 30
   magSize: 30
-  fireRate: 600
-  reloadTime: 1.5
-  hipFireRecoilX: -2
-  hipFireRecoilY: 2
-  hipFireRecoilZ: 0.35
-  adsRecoilX: -1.5
-  adsRecoilY: 1
-  adsRecoilZ: 0.3
-  snappiness: 6
-  returnSpeed: 2
+  fireRate: 700
+  reloadTime: 1.2
   reloading: 0

@@ -10,6 +10,8 @@ public class PlayerXP : MonoBehaviour
 {
     [Header("XP Bar")]
     private float xp = 0;
+
+    private float monsterPoints = 0;
     
     public float xpNeededForLevel = 100;
 
@@ -72,6 +74,12 @@ public class PlayerXP : MonoBehaviour
     public void AddXP(float xpAmount)
     {
         xp += xpAmount;
+        
         lerpTimer = 0f;
+    }
+    
+    public void AddMonsterPoints(float mp)
+    {
+        monsterPoints += mp;
     }
 }
