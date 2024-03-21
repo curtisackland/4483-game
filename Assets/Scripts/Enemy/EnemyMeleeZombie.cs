@@ -11,12 +11,14 @@ public class EnemyMeleeZombie : EnemyMelee
             {
                 // Go back to search state
                 stateMachine.ChangeState(new SearchState());
+                SetWalkingSpeed(1);
+                losePlayerTimer = 0;
             }
         }
         else
         {
             losePlayerTimer = 0;
-            SetRunningSpeed(2);
+            SetRunningSpeed(1);
             Agent().SetDestination((transform.position - Player().transform.position).normalized * followDistance + Player().transform.position);
             LastKnowPos = Player().transform.position;
             lastAttackTimer += Time.deltaTime;
@@ -73,7 +75,6 @@ public class EnemyMeleeZombie : EnemyMelee
 
         if (Agent().remainingDistance < Agent().stoppingDistance)
         {
-            searchTimer += Time.deltaTime;
             moveTimer += Time.deltaTime;
             if (moveTimer > Random.Range(3, 5))
             {
@@ -83,10 +84,11 @@ public class EnemyMeleeZombie : EnemyMelee
                 moveTimer = 0;
             }
             
-            if (searchTimer > 10)
-            {
-                stateMachine.ChangeState(new PatrolState());
-            }
+        }
+        searchTimer += Time.deltaTime;
+        if (searchTimer > 10)
+        {
+            stateMachine.ChangeState(new PatrolState());
         }
         SetIsMovingAnimation();
     }
@@ -94,21 +96,21 @@ public class EnemyMeleeZombie : EnemyMelee
     private void SetWalkingSpeed(float multiplier)
     {
         animator.SetBool("isRunning", false);
-        animator.SetFloat("walkSpeedFactor", 1f * multiplier);
+        animator.SetFloat("walkSpeedFactor", multiplier);
         Agent().speed = 0.266f * multiplier; // Based on animation
     }
     
     private void SetRunningSpeed(float multiplier)
     {
         animator.SetBool("isRunning", true);
-        animator.SetFloat("walkSpeedFactor", 1f * multiplier);
+        animator.SetFloat("walkSpeedFactor", multiplier);
         Agent().speed = 3.7f * multiplier; // Based on animation
     }
 
 
     private void SetIsMovingAnimation()
     {
-        if (Agent().velocity.magnitude > 0.2f)
+        if (Agent().velocity.magnitude > 0.2f && Agent().remainingDistance > 0.5f)
         {
             animator.SetBool("isMoving", true);
         }

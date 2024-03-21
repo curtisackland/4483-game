@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMelee : Enemy
+public abstract class EnemyMelee : Enemy
 {
     protected float searchTimer;
     protected float moveTimer;
@@ -16,7 +16,7 @@ public class EnemyMelee : Enemy
     {
         if (!CanSeePlayer())
         {
-            stateMachine.ChangeState(new AttackState());
+            stateMachine.ChangeState(new SearchState());
         }
         else
         {

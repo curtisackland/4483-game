@@ -53,7 +53,8 @@ public class SpawnEnemies : MonoBehaviour
 
         if (enemies.Count <= 3)
         {
-            for (int i = 0; i < maxAmountOfEnemies - enemies.Count; i++)
+            int oldNumEnemies = enemies.Count;
+            for (int i = 0; i < maxAmountOfEnemies - oldNumEnemies; i++)
             {
                 Vector3 randomPosition = Random.insideUnitSphere * maxSpawnRadius;
                 randomPosition += transform.position;
