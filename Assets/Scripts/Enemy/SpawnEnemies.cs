@@ -8,6 +8,7 @@ public class SpawnEnemies : MonoBehaviour
 {
     public GameObject enemy;
     public GameObject enemyZombie;
+    public GameObject enemyCyberZombie;
 
     public float maxSpawnRadius = 25f;
 
@@ -76,7 +77,11 @@ public class SpawnEnemies : MonoBehaviour
                 float spawnValue = Random.value;
 
                 GameObject enemyChosen;
-                if (spawnValue < 0.5f)
+                if (spawnValue < 0.3f || true)
+                {
+                    enemyChosen = enemyCyberZombie;
+                } 
+                else if (spawnValue < 0.6f)
                 {
                     enemyChosen = enemyZombie;
                 }
