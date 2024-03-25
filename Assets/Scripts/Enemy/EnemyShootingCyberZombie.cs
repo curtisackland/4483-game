@@ -9,22 +9,17 @@ public class EnemyShootingCyberZombie : Enemy
 
     [Range(0.1f, 10)]
     public float fireRate;
+    public float lineupTime;
     
     protected float searchTimer;
     protected float moveTimer;
     
     protected float shotTimer;
     
-    // Start is called before the first frame update
-    public override void Start()
-    {
-        base.Start();
-    }
-
     // Update is called once per frame
     public override void Update()
     {
-        
+        SetIsMovingAnimation();
     }
     
     public override void DoAttackState()
@@ -35,12 +30,27 @@ public class EnemyShootingCyberZombie : Enemy
             moveTimer += Time.deltaTime;
             shotTimer += Time.deltaTime;
             transform.LookAt(Player().transform);
-            
-            if (shotTimer > fireRate)
+
+            if (shotTimer > fireRate - lineupTime)
             {
-                Shoot();
+                animator.SetLayerWeight(1, 1);
+                animator.SetBool("isShooting", true);
+                if (shotTimer > fireRate)
+                {
+                    Shoot();
+                }
+            }
+            else
+            {
+                animator.SetBool("isShooting", false);
+            }
+
+            if (shotTimer > lineupTime) // allow weapon to be lowered before disabling upper body layer
+            {
+                animator.SetLayerWeight(1, 0);
             }
             
+
             if (moveTimer > Random.Range(3, 7))
             {
                 // randomly move enemy while attacking
@@ -75,27 +85,6 @@ public class EnemyShootingCyberZombie : Enemy
             Agent().SetDestination(transform.position + (Random.insideUnitSphere * 10));
             moveTimer = 0;
         }
-        
-        /*
-        if (enemy.Agent().remainingDistance < 0.2f)
-        {
-            waitTimer += Time.deltaTime;
-            if (waitTimer > 3)
-            {
-                if (waypointIndex < enemy.path.waypoints.Count - 1)
-                {
-                    waypointIndex++;
-                }
-                else
-                {
-                    waypointIndex = 0;
-                }
-
-                enemy.Agent().SetDestination(enemy.path.waypoints[waypointIndex].position);
-                waitTimer = 0;
-            }
-        }
-        */
     }
 
     public override void DoSearchState()
@@ -142,5 +131,17 @@ public class EnemyShootingCyberZombie : Enemy
         bullet.GetComponent<Rigidbody>().velocity = Quaternion.AngleAxis(Random.Range(-2f, 2f), Vector3.up) * shootDirection * 100;
         
         shotTimer = 0;
+    }
+    
+    private void SetIsMovingAnimation()
+    {
+        if (Agent().velocity.magnitude > 0.2f && Agent().remainingDistance > 0.5f)
+        {
+            animator.SetBool("isMoving", true);
+        }
+        else
+        {
+            animator.SetBool("isMoving", false);
+        }
     }
 }

@@ -3446,7 +3446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path: {fileID: 0}
-  animator: {fileID: 0}
+  animator: {fileID: 95450259988899018}
   sightDistance: 20
   fieldOfView: 85
   eyeHeight: 0.5
@@ -3456,6 +3456,7 @@ MonoBehaviour:
   monsterPointsWorth: 5
   gunBarrel: {fileID: 1553744949267115926}
   fireRate: 2
+  lineupTime: 0.5
 --- !u!114 &2734495651672468450
 MonoBehaviour:
   m_ObjectHideFlags: 0

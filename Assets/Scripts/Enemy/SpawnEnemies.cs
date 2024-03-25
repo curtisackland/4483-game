@@ -77,7 +77,7 @@ public class SpawnEnemies : MonoBehaviour
                 float spawnValue = Random.value;
 
                 GameObject enemyChosen;
-                if (spawnValue < 0.3f || true)
+                if (spawnValue < 0.3f)
                 {
                     enemyChosen = enemyCyberZombie;
                 } 
@@ -89,6 +89,8 @@ public class SpawnEnemies : MonoBehaviour
                 {
                     enemyChosen = enemy;
                 }
+
+                enemyChosen = enemyCyberZombie;
 
                 // Spawn enemy at the random position
                 GameObject newEnemy = Instantiate(enemyChosen, randomPosition, Quaternion.identity);
