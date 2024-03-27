@@ -24,44 +24,21 @@ public class PlayerXP : MonoBehaviour
     public Image backXPBar;
 
     public TextMeshProUGUI xpLevelText;
-    
-    void Start()
-    {
-        
-    }
+
+    public TextMeshProUGUI monsterPointsText;
     
     void Update()
     {
-        //xp = Mathf.Clamp(xp, 0, maxHealth);
         UpdateXPUI();
     }
 
     public void UpdateXPUI()
     {
+        monsterPointsText.text = monsterPoints.ToString();
         xpLevelText.text = Math.Floor(xp / xpNeededForLevel).ToString();
         float fillFront = frontXPBar.fillAmount;
         float fillBack = backXPBar.fillAmount;
         float healthFraction = xp % xpNeededForLevel / xpNeededForLevel;
-        
-        /*
-        if (fillBack > healthFraction)
-        {
-            frontXPBar.fillAmount = healthFraction;
-            backXPBar.color = Color.red;
-            lerpTimer += Time.deltaTime;
-            float percentComplete = lerpTimer / chipSpeed;
-            percentComplete = percentComplete * percentComplete; // makes animation look smoother
-            backXPBar.fillAmount = Mathf.Lerp(fillBack, healthFraction, percentComplete);
-        } else if (fillFront < healthFraction)
-        {
-            backXPBar.fillAmount = healthFraction;
-            backXPBar.color = Color.green;
-            lerpTimer += Time.deltaTime;
-            float percentComplete = lerpTimer / chipSpeed;
-            percentComplete = percentComplete * percentComplete; // makes animation look smoother
-            frontXPBar.fillAmount = Mathf.Lerp(fillFront, healthFraction, percentComplete);
-        }
-        */
         
         backXPBar.fillAmount = healthFraction;
         backXPBar.color = Color.green;

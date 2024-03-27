@@ -10,18 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9cb8b24522f530479cd71fcb341dd54, type: 3}
-  m_Name: Pistol
+  m_Name: Silenced Pistol
   m_EditorClassIdentifier: 
-  name: Pistol
+  name: Silenced Pistol
+  description: A silenced pistol, also known as a suppressor-equipped handgun, is
+    a firearm modified with a suppressor or silencer attachment to reduce the noise
+    and muzzle flash generated upon firing. These weapons are designed for discreet
+    operation, minimizing sound signature and muzzle blast, making them favored by
+    special forces, covert operatives, and for clandestine operations where stealth
+    is paramount. Silenced pistols offer enhanced stealth capabilities while maintaining
+    lethality, often used in scenarios requiring quiet engagement or covert assassinations.
   damage: 25
   maxDistance: 500
   bulletsPerShot: 1
   bulletSpread: 0
   bulletSpeed: 200
-  currentAmmo: 13
+  currentAmmo: 0
   magSize: 15
   fireRate: 300
   reloadTime: 1
+  ammoType: Pistol
   hipFireRecoilX: -4
   hipFireRecoilY: 0.5
   hipFireRecoilZ: 0.1
@@ -33,4 +41,5 @@ MonoBehaviour:
   kickBackAmount: -0.5
   kickBackSpeed: 10
   gunReturnSpeed: 20
+  outlineAssetName: Silenced Pistol Blue
   reloading: 0

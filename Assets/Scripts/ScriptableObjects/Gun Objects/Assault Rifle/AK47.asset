@@ -10,18 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9cb8b24522f530479cd71fcb341dd54, type: 3}
-  m_Name: AR
+  m_Name: AK47
   m_EditorClassIdentifier: 
-  name: Assault Rifle
+  name: AK47
+  description: The AK-47, designed by Mikhail Kalashnikov, is a renowned assault
+    rifle celebrated for its reliability, simplicity, and widespread use worldwide
+    since its introduction in 1947. Known for its ruggedness and ease of maintenance,
+    it has become an iconic symbol of military power and insurgency across the globe.
   damage: 50
   maxDistance: 500
   bulletsPerShot: 1
   bulletSpread: 0
   bulletSpeed: 200
-  currentAmmo: 26
+  currentAmmo: 21
   magSize: 30
   fireRate: 600
   reloadTime: 1.5
+  ammoType: AR
   hipFireRecoilX: -2
   hipFireRecoilY: 2
   hipFireRecoilZ: 0.35
@@ -33,4 +38,5 @@ MonoBehaviour:
   kickBackAmount: -0.5
   kickBackSpeed: 10
   gunReturnSpeed: 20
+  outlineAssetName: AK Blue
   reloading: 0

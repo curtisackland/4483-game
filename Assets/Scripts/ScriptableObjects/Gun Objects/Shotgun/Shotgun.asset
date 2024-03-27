@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: Shotgun
   m_EditorClassIdentifier: 
   name: Shotgun
+  description: A shotgun is a devastating firearm, unleashing a barrage of pellets
+    with each shot. Its wide spread and immense stopping power make it a fearsome
+    weapon, capable of incapacitating targets at close range with brutal efficiency.
+    Whether for hunting large game, defending against threats, or engaging in combat,
+    the shotgun is a formidable choice for those who demand lethal firepower.
   damage: 75
   maxDistance: 250
   bulletsPerShot: 8
@@ -22,6 +27,7 @@ MonoBehaviour:
   magSize: 10
   fireRate: 150
   reloadTime: 2
+  ammoType: Shotgun
   hipFireRecoilX: -7
   hipFireRecoilY: 3
   hipFireRecoilZ: 0.5
@@ -33,4 +39,5 @@ MonoBehaviour:
   kickBackAmount: -3
   kickBackSpeed: 10
   gunReturnSpeed: 20
+  outlineAssetName: Shotgun Blue
   reloading: 0

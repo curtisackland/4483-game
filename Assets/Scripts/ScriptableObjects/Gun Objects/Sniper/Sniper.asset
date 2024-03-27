@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: Sniper
   m_EditorClassIdentifier: 
   name: Sniper
+  description: A sniper rifle is the epitome of precision and lethality, capable
+    of delivering devastatingly accurate shots over long distances with unmatched
+    stealth. In the hands of a skilled marksman, it can eliminate targets with surgical
+    precision, striking fear into the hearts of adversaries. Its telescopic sights
+    and powerful rounds make it the weapon of choice for taking out high-value targets
+    and exerting dominance on the battlefield from afar.
   damage: 100
   maxDistance: 2000
   bulletsPerShot: 1
@@ -22,6 +28,7 @@ MonoBehaviour:
   magSize: 5
   fireRate: 100
   reloadTime: 1.5
+  ammoType: Sniper
   hipFireRecoilX: -15
   hipFireRecoilY: 5
   hipFireRecoilZ: 0.5
@@ -33,4 +40,5 @@ MonoBehaviour:
   kickBackAmount: -0.5
   kickBackSpeed: 10
   gunReturnSpeed: 20
+  outlineAssetName: Sniper Blue
   reloading: 0

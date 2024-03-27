@@ -12,11 +12,11 @@ public class Gun : MonoBehaviour
     [SerializeField]
     private GunData gunData;
 
-    public TextMeshProUGUI currentMagAmmo;
+    private TextMeshProUGUI currentMagAmmo;
 
-    public TextMeshProUGUI maxMagAmmo;
+    private TextMeshProUGUI maxMagAmmo;
 
-    public Slider reloadSlider;
+    private Slider reloadSlider;
 
     public Transform barrelPosition;
     
@@ -54,7 +54,14 @@ public class Gun : MonoBehaviour
     {
         PlayerShoot.shootInput += Shoot;
         PlayerShoot.reloadInput += StartReload;
+        
+        UIWeaponData temp = GetComponentInParent<UIWeaponData>();
+        reloadSlider = temp.reloadSlider;
+        reloadSlider.value = 0f;
         reloadSlider.gameObject.SetActive(false);
+        currentMagAmmo = temp.currentMagAmmo;
+        maxMagAmmo = temp.maxMagAmmo;
+        
         layerMask = LayerMask.GetMask("Default", "Water", "Spawnable");
         gunScopeIn = GetComponent<ScopeIn>();
         gunRecoil = GetComponent<GunRecoil>();
@@ -214,5 +221,19 @@ public class Gun : MonoBehaviour
         
         // Gunshot audio
         gunshotAudio.Play();
+    }
+
+    private void OnDestroy()
+    {
+        PlayerShoot.shootInput -= Shoot;
+        PlayerShoot.reloadInput -= StartReload;
+    }
+
+    private void OnEnable()
+    {
+        if (reloadSlider != null)
+        {
+            reloadSlider.gameObject.SetActive(false);
+        }
     }
 }

@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: Revolver
   m_EditorClassIdentifier: 
   name: Revolver
+  description: A revolver is a type of handgun characterized by a rotating cylinder
+    containing multiple chambers, each capable of holding a single cartridge. Its
+    simple and robust design provides reliability and ease of use, making it a popular
+    choice for self-defense, law enforcement, and recreational shooting. Revolvers
+    are known for their distinctive appearance and timeless appeal, offering shooters
+    a classic and reliable firearm option.
   damage: 75
   maxDistance: 500
   bulletsPerShot: 1
@@ -22,6 +28,7 @@ MonoBehaviour:
   magSize: 6
   fireRate: 200
   reloadTime: 2
+  ammoType: Pistol
   hipFireRecoilX: -10
   hipFireRecoilY: 10
   hipFireRecoilZ: 0.35
@@ -33,4 +40,5 @@ MonoBehaviour:
   kickBackAmount: -3
   kickBackSpeed: 10
   gunReturnSpeed: 20
+  outlineAssetName: Revolver Blue
   reloading: 0

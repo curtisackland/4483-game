@@ -8,6 +8,7 @@ public class GunData : ScriptableObject
 {
     [Header("Info")]
     public new string name;
+    public string description;
 
     [Header("Shooting")]
     public float damage;
@@ -21,6 +22,7 @@ public class GunData : ScriptableObject
     public int magSize;
     public float fireRate;
     public float reloadTime;
+    public string ammoType;
     
     [Header("Recoil")]
     public float hipFireRecoilX = -2.0f;
@@ -35,6 +37,9 @@ public class GunData : ScriptableObject
     public float kickBackAmount = -0.5f;
     public float kickBackSpeed = 10;
     public float gunReturnSpeed = 20;
+
+    [Header("Resources")]
+    public string outlineAssetName;
     
     [HideInInspector]
     public bool reloading;

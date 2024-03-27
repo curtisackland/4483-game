@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: SMG
   m_EditorClassIdentifier: 
   name: SMG
+  description: ' An SMG, or submachine gun, is a compact and rapid-firing firearm
+    designed for close-quarters combat. Its high rate of fire and compact size make
+    it lethal in tight spaces, ideal for engaging multiple targets quickly and effectively.
+    With its devastating firepower and ease of handling, the SMG is a deadly weapon
+    favored by special forces, law enforcement, and close-proximity combat situations.'
   damage: 25
   maxDistance: 300
   bulletsPerShot: 1
@@ -22,6 +27,7 @@ MonoBehaviour:
   magSize: 50
   fireRate: 900
   reloadTime: 1
+  ammoType: SMG
   hipFireRecoilX: -2
   hipFireRecoilY: 1.5
   hipFireRecoilZ: 0.3
@@ -33,4 +39,5 @@ MonoBehaviour:
   kickBackAmount: -0.5
   kickBackSpeed: 10
   gunReturnSpeed: 20
+  outlineAssetName: SMG Blue
   reloading: 0
