@@ -41,6 +41,9 @@ public class InventoryController : MonoBehaviour
 
     public WeaponSwitching weaponSwitching;
 
+    [SerializeField]
+    private Dictionary<string, int> ammoCounts = new Dictionary<string, int>();
+
     private bool inventoryOpen = false;
     
     void Start()
@@ -76,6 +79,11 @@ public class InventoryController : MonoBehaviour
         weaponSlotsGunData.Add(silencedPistol);
         weaponSlotsGunData.Add(null);
         weaponSlotsGunData.Add(null);
+
+        ammoCounts["AR"] = 300;
+        ammoCounts["Pistol"] = 300;
+        ammoCounts["Shotgun"] = 300;
+        ammoCounts["Sniper"] = 300;
         
         inventoryUI.GameObject().SetActive(false);
     }
@@ -230,5 +238,43 @@ public class InventoryController : MonoBehaviour
             inventoryGunData.Add(newGun);
             inventoryGunImages[inventoryGunData.IndexOf(newGun)].sprite = Resources.Load<Sprite>("WeaponOutlines/" + newGun.outlineAssetName);
         }
+    }
+
+    public void UpdateAmmo(string ammoType, int amount)
+    {
+        switch (ammoType)
+        {
+            case "AR":
+                ammoCounts["AR"] += amount;
+                ammoCounts["AR"] = Math.Clamp(ammoCounts["AR"], 0, 300);
+                break;
+            case "Pistol":
+                ammoCounts["Pistol"] += amount;
+                ammoCounts["Pistol"] = Math.Clamp(ammoCounts["Pistol"], 0, 60);
+                break;
+            case "Shotgun":
+                ammoCounts["Shotgun"] += amount;
+                ammoCounts["Shotgun"] = Math.Clamp(ammoCounts["Shotgun"], 0, 180);
+                break;
+            case "Sniper":
+                ammoCounts["Sniper"] += amount;
+                ammoCounts["Sniper"] = Math.Clamp(ammoCounts["Sniper"], 0, 60);
+                break;
+            case "All":
+                ammoCounts["AR"] += amount;
+                ammoCounts["AR"] = Math.Clamp(ammoCounts["AR"], 0, 300);
+                ammoCounts["Pistol"] += amount;
+                ammoCounts["Pistol"] = Math.Clamp(ammoCounts["Pistol"], 0, 60);
+                ammoCounts["Shotgun"] += amount;
+                ammoCounts["Shotgun"] = Math.Clamp(ammoCounts["Shotgun"], 0, 180);
+                ammoCounts["Sniper"] += amount;
+                ammoCounts["Sniper"] = Math.Clamp(ammoCounts["Sniper"], 0, 60);
+                break;
+        }
+    }
+
+    public int GetAmmoCount(string type)
+    {
+        return ammoCounts[type];
     }
 }

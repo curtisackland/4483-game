@@ -27,7 +27,7 @@ MonoBehaviour:
   magSize: 50
   fireRate: 900
   reloadTime: 1
-  ammoType: SMG
+  ammoType: Pistol
   hipFireRecoilX: -2
   hipFireRecoilY: 1.5
   hipFireRecoilZ: 0.3

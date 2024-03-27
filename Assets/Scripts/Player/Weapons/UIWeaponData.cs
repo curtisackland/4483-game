@@ -13,4 +13,6 @@ public class UIWeaponData : MonoBehaviour
     public TextMeshProUGUI currentMagAmmo;
 
     public TextMeshProUGUI maxMagAmmo;
+
+    public InventoryController inventoryController;
 }

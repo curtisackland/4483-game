@@ -48,6 +48,8 @@ public class Gun : MonoBehaviour
 
     private AudioSource gunshotAudio;
 
+    private InventoryController inventory;
+
     private bool CanShoot() => !gunData.reloading && timeSinceLastShot > 1f / (gunData.fireRate / 60f);
 
     private void Start()
@@ -61,6 +63,7 @@ public class Gun : MonoBehaviour
         reloadSlider.gameObject.SetActive(false);
         currentMagAmmo = temp.currentMagAmmo;
         maxMagAmmo = temp.maxMagAmmo;
+        inventory = temp.inventoryController;
         
         layerMask = LayerMask.GetMask("Default", "Water", "Spawnable");
         gunScopeIn = GetComponent<ScopeIn>();
@@ -90,7 +93,7 @@ public class Gun : MonoBehaviour
 
     public void StartReload()
     {
-        if (!gunData.reloading && gameObject.activeSelf)
+        if (gameObject.activeSelf && !gunData.reloading && inventory.GetAmmoCount(gunData.ammoType) > 0)
         {
             reloadTimer = 0;
             reloadSlider.gameObject.SetActive(true);
@@ -110,7 +113,9 @@ public class Gun : MonoBehaviour
             yield return null;
         }
 
-        gunData.currentAmmo = gunData.magSize;
+        // decrease ammo on reload
+        gunData.currentAmmo = Math.Min(gunData.magSize, inventory.GetAmmoCount(gunData.ammoType));
+        inventory.UpdateAmmo(gunData.ammoType, -gunData.currentAmmo);
         currentMagAmmo.text = gunData.currentAmmo.ToString();
         reloadSlider.gameObject.SetActive(false);
 
