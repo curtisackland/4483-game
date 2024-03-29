@@ -12,11 +12,15 @@ public class Gun : MonoBehaviour
     [SerializeField]
     private GunData gunData;
 
-    public TextMeshProUGUI currentMagAmmo;
+    private TextMeshProUGUI currentMagAmmo;
 
-    public TextMeshProUGUI maxMagAmmo;
+    private TextMeshProUGUI maxMagAmmo;
+    
+    private TextMeshProUGUI totalAmmo;
+    
+    private Image ammoTypeImage;
 
-    public Slider reloadSlider;
+    private Slider reloadSlider;
 
     public Transform barrelPosition;
     
@@ -48,13 +52,25 @@ public class Gun : MonoBehaviour
 
     private AudioSource gunshotAudio;
 
+    private InventoryController inventory;
+
     private bool CanShoot() => !gunData.reloading && timeSinceLastShot > 1f / (gunData.fireRate / 60f);
 
     private void Start()
     {
         PlayerShoot.shootInput += Shoot;
         PlayerShoot.reloadInput += StartReload;
+        
+        UIWeaponData temp = GetComponentInParent<UIWeaponData>();
+        reloadSlider = temp.reloadSlider;
+        reloadSlider.value = 0f;
         reloadSlider.gameObject.SetActive(false);
+        currentMagAmmo = temp.currentMagAmmo;
+        maxMagAmmo = temp.maxMagAmmo;
+        totalAmmo = temp.totalAmmo;
+        ammoTypeImage = temp.ammoTypeImage;
+        inventory = temp.inventoryController;
+        
         layerMask = LayerMask.GetMask("Default", "Water", "Spawnable");
         gunScopeIn = GetComponent<ScopeIn>();
         gunRecoil = GetComponent<GunRecoil>();
@@ -69,6 +85,8 @@ public class Gun : MonoBehaviour
     {
         currentMagAmmo.text = gunData.currentAmmo.ToString();
         maxMagAmmo.text = gunData.magSize.ToString();
+        totalAmmo.text = inventory.GetAmmoCount(gunData.ammoType).ToString();
+        ammoTypeImage.sprite = Resources.Load<Sprite>("Icons/" + gunData.ammoType + " Ammo");
         timeSinceLastShot += Time.deltaTime;
         muzzleFlashLight.intensity = Mathf.Lerp(muzzleFlashLight.intensity, 0, lightReturnSpeed * Time.deltaTime);
     }
@@ -83,7 +101,7 @@ public class Gun : MonoBehaviour
 
     public void StartReload()
     {
-        if (!gunData.reloading && gameObject.activeSelf)
+        if (gameObject.activeSelf && !gunData.reloading && inventory.GetAmmoCount(gunData.ammoType) > 0)
         {
             reloadTimer = 0;
             reloadSlider.gameObject.SetActive(true);
@@ -103,7 +121,10 @@ public class Gun : MonoBehaviour
             yield return null;
         }
 
-        gunData.currentAmmo = gunData.magSize;
+        // decrease ammo on reload
+        int availableAmmo = Math.Min(gunData.magSize - gunData.currentAmmo, inventory.GetAmmoCount(gunData.ammoType));
+        gunData.currentAmmo += availableAmmo;
+        inventory.UpdateAmmo(gunData.ammoType, -availableAmmo);
         currentMagAmmo.text = gunData.currentAmmo.ToString();
         reloadSlider.gameObject.SetActive(false);
 
@@ -214,5 +235,19 @@ public class Gun : MonoBehaviour
         
         // Gunshot audio
         gunshotAudio.Play();
+    }
+
+    private void OnDestroy()
+    {
+        PlayerShoot.shootInput -= Shoot;
+        PlayerShoot.reloadInput -= StartReload;
+    }
+
+    private void OnEnable()
+    {
+        if (reloadSlider != null)
+        {
+            reloadSlider.gameObject.SetActive(false);
+        }
     }
 }

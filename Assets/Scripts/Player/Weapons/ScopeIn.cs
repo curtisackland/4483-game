@@ -14,7 +14,7 @@ public class ScopeIn : MonoBehaviour
 
     public Transform gun;
 
-    public Camera cam;
+    private Camera cam;
 
     public float zoomAmount = 1f;
 
@@ -27,6 +27,8 @@ public class ScopeIn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UIWeaponData temp = GetComponentInParent<UIWeaponData>();
+        cam = temp.mainCamera;
         defaultFov = cam.fieldOfView;
     }
 

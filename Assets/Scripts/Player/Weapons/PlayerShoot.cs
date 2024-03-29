@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 
@@ -7,12 +5,20 @@ public class PlayerShoot : MonoBehaviour
 {
     public static Action shootInput;
     public static Action reloadInput;
+    
+    private InventoryController inventoryController;
+    
+    [SerializeField]
+    private GameObject store;
+
+    private void Start()
+    {
+        inventoryController = GetComponent<InventoryController>();
+    }
 
     private void Update()
     {
-        // TODO use input actions for this
-        
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && !inventoryController.IsInventoryOpen() && !store.activeSelf)
         {
             // if there are no subscribers to this event, check for null first
             shootInput?.Invoke();
