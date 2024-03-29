@@ -38275,7 +38275,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3931646804616213690, guid: 830c1731e0b1bc34ca0d5455294d5afb, type: 3}
       propertyPath: speed
-      value: 12
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931646804616213690, guid: 830c1731e0b1bc34ca0d5455294d5afb, type: 3}
+      propertyPath: startDelay
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4213415028499503145, guid: 830c1731e0b1bc34ca0d5455294d5afb, type: 3}
       propertyPath: m_Radius

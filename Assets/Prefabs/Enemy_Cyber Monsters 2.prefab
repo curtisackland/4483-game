@@ -3460,6 +3460,7 @@ MonoBehaviour:
   fireTime: 2
   lineupTime: 0.25
   lowerTime: 0.5
+  agentSpeed: 3.5
 --- !u!114 &2734495651672468450
 MonoBehaviour:
   m_ObjectHideFlags: 0

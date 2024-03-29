@@ -686,7 +686,7 @@ MonoBehaviour:
   xpWorth: 40
   monsterPointsWorth: 5
   gunBarrel: {fileID: 5301999664433052044}
-  fireRate: 0
+  fireRate: 2
 --- !u!1 &4863896553275487212
 GameObject:
   m_ObjectHideFlags: 0

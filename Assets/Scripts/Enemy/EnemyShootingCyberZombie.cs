@@ -9,11 +9,13 @@ public class EnemyShootingCyberZombie : EnemyShooting
     public float fireTime;
     public float lineupTime;
     public float lowerTime;
+    public float agentSpeed;
     private bool weaponIsLowering = false;
     
     // Update is called once per frame
     public override void Update()
     {
+        
         SetIsMovingAnimation();
     }
     
@@ -24,6 +26,8 @@ public class EnemyShootingCyberZombie : EnemyShooting
             losePlayerTimer = 0;
             moveTimer += Time.deltaTime;
             shotTimer += Time.deltaTime;
+            var posDiff = Player().transform.position - transform.position;
+            float angleFromAgentForward = 180 * Mathf.Acos(Vector3.Dot(transform.forward, posDiff) / posDiff.magnitude) / Mathf.PI;
 
             if (shotTimer > fireTime - lowerTime && weaponIsLowering) // allow weapon to be lowered before disabling upper body layer
             {
@@ -34,15 +38,21 @@ public class EnemyShootingCyberZombie : EnemyShooting
                     shotTimer = 0;
                 }
             }
-            else if (!weaponIsLowering) // lining up to shoot
+            else if (!weaponIsLowering || animator.GetBool("isShooting")) // lining up to shoot
             {
                 animator.SetLayerWeight(1, 1);
                 animator.SetBool("isShooting", true);
-                if (shotTimer > lineupTime) // Shoot
+                Agent().speed = 0;
+                var lookProjected = Quaternion.LookRotation((new Vector3(Player().transform.position.x,
+                    transform.position.y, Player().transform.position.z) - transform.position), transform.up);
+
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, lookProjected, 240f * Time.deltaTime);
+                if (shotTimer > lineupTime  && angleFromAgentForward < 20f) // Shoot
                 {
                     Shoot();
                     animator.SetBool("isShooting", false);
                     weaponIsLowering = true;
+                    Agent().speed = agentSpeed;
                 }
             }
             

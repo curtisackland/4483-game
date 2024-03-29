@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Objectives : MonoBehaviour
 {
 
     public PlayerXP playerStats;
+    public GameObject demonBossGate;
+    public GameObject demonBoss;
+    public GameObject monkeyBoss;
     
     private TextMeshProUGUI objectiveText;
 
@@ -31,21 +35,22 @@ public class Objectives : MonoBehaviour
     void Update()
     {
         objectiveText.text = objectives[completedObjectives];
-        if (completedObjectives == 0 && playerStats.GetXP() >= 10)
+        if (completedObjectives == 0 && playerStats.GetXP() >= 1)
         {
             completedObjectives++;
-        } else if (completedObjectives == 1)
+            demonBossGate.SetActive(false);
+        } else if (completedObjectives == 1 && demonBoss.IsDestroyed())
         {
             // TODO insert boss completion here
             completedObjectives++;
-        } else if (completedObjectives == 2 && playerStats.GetXP() >= 20)
+        } else if (completedObjectives == 2 && playerStats.GetXP() >= 2)
         {
             completedObjectives++;
         } else if (completedObjectives == 3)
         {
             // TODO insert boss completion here
             completedObjectives++;
-        } else if (completedObjectives == 4 && playerStats.GetXP() >= 30)
+        } else if (completedObjectives == 4 && playerStats.GetXP() >= 3)
         {
             completedObjectives++;
         } else if (completedObjectives == 5)
