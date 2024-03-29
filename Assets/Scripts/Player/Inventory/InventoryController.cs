@@ -1,15 +1,9 @@
-
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mime;
 using TMPro;
-using TMPro.EditorUtilities;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class InventoryController : MonoBehaviour
@@ -35,14 +29,30 @@ public class InventoryController : MonoBehaviour
     
     public TextMeshProUGUI previewWeaponMagSize;
 
+    public Image previewWeaponAmmoType;
+
     private GunData previewWeaponGunData;
 
     public GameObject inventoryUI;
 
     public WeaponSwitching weaponSwitching;
+    
+    private Dictionary<string, int> ammoCounts = new Dictionary<string, int>();
 
     [SerializeField]
-    private Dictionary<string, int> ammoCounts = new Dictionary<string, int>();
+    private TextMeshProUGUI arAmmoText;
+    
+    [SerializeField]
+    private TextMeshProUGUI pistolAmmoText;
+    
+    [SerializeField]
+    private TextMeshProUGUI shotgunAmmoText;
+    
+    [SerializeField]
+    private TextMeshProUGUI sniperAmmoText;
+
+    [SerializeField]
+    private GameObject store;
 
     private bool inventoryOpen = false;
     
@@ -68,13 +78,20 @@ public class InventoryController : MonoBehaviour
         inventoryWeaponSlotImages[3].sprite = Resources.Load<Sprite>("WeaponOutlines/Blank Gun");
 
         previewWeaponImage.sprite = Resources.Load<Sprite>("WeaponOutlines/AK Blue");
-        previewWeaponGunData = AssetDatabase.LoadAssetAtPath<GunData>("Assets/Scripts/ScriptableObjects/Gun Objects/Assault Rifle/AK47.asset");
+        previewWeaponGunData = Resources.Load<GunData>("Gun Objects/Assault Rifle/AK47");
         
         // Start with these two guns
-        GunData ak47 = AssetDatabase.LoadAssetAtPath<GunData>("Assets/Scripts/ScriptableObjects/Gun Objects/Assault Rifle/AK47.asset");
-        GunData silencedPistol = AssetDatabase.LoadAssetAtPath<GunData>("Assets/Scripts/ScriptableObjects/Gun Objects/Pistol/Silenced Pistol.asset");
+        GunData ak47 = Resources.Load<GunData>("Gun Objects/Assault Rifle/AK47");
+        GunData silencedPistol = Resources.Load<GunData>("Gun Objects/Pistol/Silenced Pistol");
         inventoryGunData.Add(ak47);
         inventoryGunData.Add(silencedPistol);
+        inventoryGunData.Add(null);
+        inventoryGunData.Add(null);
+        inventoryGunData.Add(null);
+        inventoryGunData.Add(null);
+        inventoryGunData.Add(null);
+        inventoryGunData.Add(null);
+        
         weaponSlotsGunData.Add(ak47);
         weaponSlotsGunData.Add(silencedPistol);
         weaponSlotsGunData.Add(null);
@@ -90,7 +107,7 @@ public class InventoryController : MonoBehaviour
     
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.Tab) && !store.activeSelf)
         {
             inventoryOpen = !inventoryOpen;
             if (!inventoryOpen)
@@ -109,12 +126,10 @@ public class InventoryController : MonoBehaviour
 
         if (inventoryOpen)
         {
-            
-        }
-
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            AddWeapon(AssetDatabase.LoadAssetAtPath<GunData>("Assets/Scripts/ScriptableObjects/Gun Objects/Assault Rifle/M4A1.asset"));
+            arAmmoText.text = ammoCounts["AR"].ToString();
+            pistolAmmoText.text = ammoCounts["Pistol"].ToString();
+            shotgunAmmoText.text = ammoCounts["Shotgun"].ToString();
+            sniperAmmoText.text = ammoCounts["Sniper"].ToString();
         }
     }
 
@@ -149,8 +164,9 @@ public class InventoryController : MonoBehaviour
         previewWeaponPower.text = previewWeaponGunData.damage.ToString();
         previewWeaponFirerate.text = previewWeaponGunData.fireRate.ToString();
         previewWeaponMagSize.text = previewWeaponGunData.magSize.ToString();
+        previewWeaponAmmoType.sprite = Resources.Load<Sprite>("Icons/" + previewWeaponGunData.ammoType + " Ammo");
 
-        for (int i = 0; i < inventoryWeaponSlotImages.Count; i++)
+        for (int i = 0; i < inventoryGunImages.Count; i++)
         {
             Drag slot = inventoryGunImages[i].GetComponent<Drag>();
             if (slot != null && slot.IsMouseOver() && inventoryGunImages[i] != gunSwitchImage)
@@ -161,7 +177,7 @@ public class InventoryController : MonoBehaviour
                 Debug.Log("Drag component not assigned to weapon UI element");
             }
         }
-
+        
         // swap from inventory to gun slots
         if (fromInventory && !toInventory)
         {
@@ -235,8 +251,15 @@ public class InventoryController : MonoBehaviour
     {
         if (!inventoryGunData.Contains(newGun))
         {
-            inventoryGunData.Add(newGun);
-            inventoryGunImages[inventoryGunData.IndexOf(newGun)].sprite = Resources.Load<Sprite>("WeaponOutlines/" + newGun.outlineAssetName);
+            for (int i = 0; i < inventoryGunData.Count; i++)
+            {
+                if (inventoryGunData[i] == null)
+                {
+                    inventoryGunData[i] = newGun;
+                    inventoryGunImages[inventoryGunData.IndexOf(newGun)].sprite = Resources.Load<Sprite>("WeaponOutlines/" + newGun.outlineAssetName);
+                    break;
+                }
+            }
         }
     }
 

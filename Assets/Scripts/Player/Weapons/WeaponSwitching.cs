@@ -1,7 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WeaponSwitching : MonoBehaviour
 {
@@ -9,6 +8,8 @@ public class WeaponSwitching : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform[] weapons;
 
+    [SerializeField] private Image[] backgroundImages;
+    
     [Header("Keys")]
     [SerializeField] private KeyCode[] keys;
 
@@ -52,6 +53,19 @@ public class WeaponSwitching : MonoBehaviour
     }
 
     private void Select(int weaponIndex) {
+
+        for (int i = 0; i < backgroundImages.Length; i++)
+        {
+            if (i == weaponIndex)
+            {
+                backgroundImages[i].color = new Color(255, 198, 0, 2);
+            }
+            else
+            {
+                backgroundImages[i].color = new Color(175, 175, 175, 0.7f);
+            }
+        }
+        
         for (int i = 0; i < weapons.Length; i++)
         {
             if (weapons[i] != null)

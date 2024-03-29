@@ -14,6 +14,9 @@ public class PlayerLook : MonoBehaviour
     public float ySensitivty = 30f;
 
     private InventoryController inventoryController;
+    
+    [SerializeField]
+    private GameObject store;
 
     private void Start()
     {
@@ -23,7 +26,7 @@ public class PlayerLook : MonoBehaviour
     public void ProcessLook(Vector2 input)
     {
         
-        if (!inventoryController.IsInventoryOpen())
+        if (!inventoryController.IsInventoryOpen() && !store.activeSelf)
         {
             float mouseX = input.x;
             float mouseY = input.y;

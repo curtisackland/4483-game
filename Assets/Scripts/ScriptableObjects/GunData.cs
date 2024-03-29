@@ -38,6 +38,11 @@ public class GunData : ScriptableObject
     public float kickBackSpeed = 10;
     public float gunReturnSpeed = 20;
 
+    [Header("Shop")]
+    public float monsterPointsCost = 100;
+    public int requiredXPLevel = 10;
+    public bool owned;
+    
     [Header("Resources")]
     public string outlineAssetName;
     

@@ -15,6 +15,10 @@ public class Gun : MonoBehaviour
     private TextMeshProUGUI currentMagAmmo;
 
     private TextMeshProUGUI maxMagAmmo;
+    
+    private TextMeshProUGUI totalAmmo;
+    
+    private Image ammoTypeImage;
 
     private Slider reloadSlider;
 
@@ -63,6 +67,8 @@ public class Gun : MonoBehaviour
         reloadSlider.gameObject.SetActive(false);
         currentMagAmmo = temp.currentMagAmmo;
         maxMagAmmo = temp.maxMagAmmo;
+        totalAmmo = temp.totalAmmo;
+        ammoTypeImage = temp.ammoTypeImage;
         inventory = temp.inventoryController;
         
         layerMask = LayerMask.GetMask("Default", "Water", "Spawnable");
@@ -79,6 +85,8 @@ public class Gun : MonoBehaviour
     {
         currentMagAmmo.text = gunData.currentAmmo.ToString();
         maxMagAmmo.text = gunData.magSize.ToString();
+        totalAmmo.text = inventory.GetAmmoCount(gunData.ammoType).ToString();
+        ammoTypeImage.sprite = Resources.Load<Sprite>("Icons/" + gunData.ammoType + " Ammo");
         timeSinceLastShot += Time.deltaTime;
         muzzleFlashLight.intensity = Mathf.Lerp(muzzleFlashLight.intensity, 0, lightReturnSpeed * Time.deltaTime);
     }
@@ -114,8 +122,9 @@ public class Gun : MonoBehaviour
         }
 
         // decrease ammo on reload
-        gunData.currentAmmo = Math.Min(gunData.magSize, inventory.GetAmmoCount(gunData.ammoType));
-        inventory.UpdateAmmo(gunData.ammoType, -gunData.currentAmmo);
+        int availableAmmo = Math.Min(gunData.magSize - gunData.currentAmmo, inventory.GetAmmoCount(gunData.ammoType));
+        gunData.currentAmmo += availableAmmo;
+        inventory.UpdateAmmo(gunData.ammoType, -availableAmmo);
         currentMagAmmo.text = gunData.currentAmmo.ToString();
         reloadSlider.gameObject.SetActive(false);
 

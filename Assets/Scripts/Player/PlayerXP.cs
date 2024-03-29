@@ -59,4 +59,14 @@ public class PlayerXP : MonoBehaviour
     {
         monsterPoints += mp;
     }
+
+    public float GetMonsterPoints()
+    {
+        return monsterPoints;
+    }
+
+    public float GetXP()
+    {
+        return (float) Math.Floor(xp / xpNeededForLevel);
+    }
 }

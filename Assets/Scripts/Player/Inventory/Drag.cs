@@ -16,8 +16,6 @@ public class Drag : MonoBehaviour
 
     private bool isDragging;
     
-    
-    
     private void Start()
     {
         originalPosition = transform.position;
@@ -47,9 +45,6 @@ public class Drag : MonoBehaviour
 
     public void DropHandler(BaseEventData data)
     {
-        
-        PointerEventData pointerData = (PointerEventData)data;
-        
         inventory.SwitchGunSlotWeapon(gunImage);
 
         transform.position = originalPosition;
