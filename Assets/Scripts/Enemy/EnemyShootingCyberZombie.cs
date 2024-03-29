@@ -1,20 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class EnemyShootingCyberZombie : Enemy
+public class EnemyShootingCyberZombie : EnemyShooting
 {
-    [Header("Weapon Values")]
-    public Transform gunBarrel;
-
-    [Range(0.1f, 10)]
-    public float fireRate;
+    [FormerlySerializedAs("fireRate")] [Range(0.1f, 10)]
+    public float fireTime;
     public float lineupTime;
-    
-    protected float searchTimer;
-    protected float moveTimer;
-    
-    protected float shotTimer;
+    public float lowerTime;
+    private bool weaponIsLowering = false;
     
     // Update is called once per frame
     public override void Update()
@@ -24,33 +19,33 @@ public class EnemyShootingCyberZombie : Enemy
     
     public override void DoAttackState()
     {
-        if (CanSeePlayer())
+        if (CanSeePlayer(false))
         {
             losePlayerTimer = 0;
             moveTimer += Time.deltaTime;
             shotTimer += Time.deltaTime;
-            transform.LookAt(Player().transform);
 
-            if (shotTimer > fireRate - lineupTime)
+            if (shotTimer > fireTime - lowerTime && weaponIsLowering) // allow weapon to be lowered before disabling upper body layer
+            {
+                if (shotTimer > fireTime)
+                {
+                    animator.SetLayerWeight(1, 0);
+                    weaponIsLowering = false;
+                    shotTimer = 0;
+                }
+            }
+            else if (!weaponIsLowering) // lining up to shoot
             {
                 animator.SetLayerWeight(1, 1);
                 animator.SetBool("isShooting", true);
-                if (shotTimer > fireRate)
+                if (shotTimer > lineupTime) // Shoot
                 {
                     Shoot();
+                    animator.SetBool("isShooting", false);
+                    weaponIsLowering = true;
                 }
             }
-            else
-            {
-                animator.SetBool("isShooting", false);
-            }
-
-            if (shotTimer > lineupTime) // allow weapon to be lowered before disabling upper body layer
-            {
-                animator.SetLayerWeight(1, 0);
-            }
             
-
             if (moveTimer > Random.Range(3, 7))
             {
                 // randomly move enemy while attacking
@@ -65,15 +60,19 @@ public class EnemyShootingCyberZombie : Enemy
             losePlayerTimer += Time.deltaTime;
             if (losePlayerTimer > 8)
             {
+                animator.SetBool("isShooting", false);
+                animator.SetLayerWeight(1, 0);
+
                 // Go back to search state
                 stateMachine.ChangeState(new SearchState());
+
             }
         }
     }
 
     public override void DoPatrolState()
     {
-        if (CanSeePlayer())
+        if (CanSeePlayer(true))
         {
             stateMachine.ChangeState(new AttackState());
         }
@@ -89,7 +88,7 @@ public class EnemyShootingCyberZombie : Enemy
 
     public override void DoSearchState()
     {
-        if (CanSeePlayer())
+        if (CanSeePlayer(true))
         {
             stateMachine.ChangeState(new AttackState());
         }
@@ -129,8 +128,6 @@ public class EnemyShootingCyberZombie : Enemy
         Vector3 shootDirection = (Player().transform.position - gunBarrelPosition).normalized;
 
         bullet.GetComponent<Rigidbody>().velocity = Quaternion.AngleAxis(Random.Range(-2f, 2f), Vector3.up) * shootDirection * 100;
-        
-        shotTimer = 0;
     }
     
     private void SetIsMovingAnimation()

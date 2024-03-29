@@ -9,6 +9,8 @@ public class SpawnEnemies : MonoBehaviour
     public GameObject enemy;
     public GameObject enemyZombie;
     public GameObject enemyCyberZombie;
+    public GameObject enemyDemonTree;
+    public GameObject enemyMonkeyKing;
 
     public float maxSpawnRadius = 25f;
 
@@ -77,11 +79,19 @@ public class SpawnEnemies : MonoBehaviour
                 float spawnValue = Random.value;
 
                 GameObject enemyChosen;
-                if (spawnValue < 0.3f)
+                if (spawnValue < 0.2f)
+                {
+                    enemyChosen = enemyMonkeyKing;
+                } 
+                else if (spawnValue < 0.4f)
+                {
+                    enemyChosen = enemyDemonTree;
+                }
+                else if (spawnValue < 0.6f)
                 {
                     enemyChosen = enemyCyberZombie;
                 } 
-                else if (spawnValue < 0.6f)
+                else if (spawnValue < 0.8f)
                 {
                     enemyChosen = enemyZombie;
                 }
@@ -90,7 +100,7 @@ public class SpawnEnemies : MonoBehaviour
                     enemyChosen = enemy;
                 }
 
-                enemyChosen = enemyCyberZombie;
+                //enemyChosen = enemyDemonTree;
 
                 // Spawn enemy at the random position
                 GameObject newEnemy = Instantiate(enemyChosen, randomPosition, Quaternion.identity);

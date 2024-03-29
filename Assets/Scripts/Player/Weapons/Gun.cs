@@ -55,7 +55,7 @@ public class Gun : MonoBehaviour
         PlayerShoot.shootInput += Shoot;
         PlayerShoot.reloadInput += StartReload;
         reloadSlider.gameObject.SetActive(false);
-        layerMask = LayerMask.GetMask("Default", "Water", "Spawnable");
+        layerMask = LayerMask.GetMask("Default", "Water", "Spawnable", "Enemy");
         gunScopeIn = GetComponent<ScopeIn>();
         gunRecoil = GetComponent<GunRecoil>();
         gunshotAudio = GetComponent<AudioSource>();
