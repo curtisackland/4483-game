@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMotor : MonoBehaviour
@@ -14,22 +11,25 @@ public class PlayerMotor : MonoBehaviour
     private bool sprinting;
     private float timer;
     private float originalCameraYPosition;
+    private AudioSource walkingAudio;
 
     public Camera firstPersonCamera;
     public float bobbingSpeed = 14f;
     public float bobbingAmount = 0.05f;
     public float speed = 5f;
     public float gravity = -9.8f;
-    public float jumpHeight = 3f;
+    public float jumpHeight = 1.2f;
+
+    [SerializeField]
+    private GameObject store;
     
-    // Start is called before the first frame update
     void Start()
     {
         controller = GetComponent<CharacterController>();
         originalCameraYPosition = firstPersonCamera.transform.localPosition.y;
+        walkingAudio = GetComponents<AudioSource>()[0];
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         isGrounded = controller.isGrounded;
@@ -58,37 +58,43 @@ public class PlayerMotor : MonoBehaviour
 
     public void ProcessMove(Vector2 input)
     {
-        Vector3 totalMove = new Vector3();
-        Vector3 moveDirection = Vector3.zero;
-        moveDirection.x = input.x;
-        moveDirection.z = input.y;
-        totalMove += transform.TransformDirection(moveDirection) * speed;
-        playerVelocity.y += gravity * Time.deltaTime;
+        if (!store.activeSelf)
+        {
+            Vector3 totalMove = new Vector3();
+            Vector3 moveDirection = Vector3.zero;
+            moveDirection.x = input.x;
+            moveDirection.z = input.y;
+            totalMove += transform.TransformDirection(moveDirection) * speed;
+            playerVelocity.y += gravity * Time.deltaTime;
 
-        if (isGrounded && playerVelocity.y < 0)
-            playerVelocity = new Vector3(0, -2f, 0);
-        totalMove += playerVelocity;
-        
-        controller.Move(totalMove * Time.deltaTime);
-        
-        
-        if(Mathf.Abs(moveDirection.x) > 0.1f || Mathf.Abs(moveDirection.z) > 0.1f)
-        {
-            //Player is moving
-            timer += Time.deltaTime * bobbingSpeed;
-            firstPersonCamera.transform.localPosition = new Vector3(0, originalCameraYPosition + Mathf.Sin(timer) * bobbingAmount, 0);
-        }
-        else
-        {
-            //Idle
-            timer = 0;
-            firstPersonCamera.transform.localPosition = new Vector3(0, Mathf.Lerp(firstPersonCamera.transform.localPosition.y, originalCameraYPosition, Time.deltaTime * bobbingSpeed), 0);
+            if (isGrounded && playerVelocity.y < 0)
+                playerVelocity = new Vector3(0, -2f, 0);
+            totalMove += playerVelocity;
+
+            controller.Move(totalMove * Time.deltaTime);
+
+
+            if(Mathf.Abs(moveDirection.x) > 0.1f || Mathf.Abs(moveDirection.z) > 0.1f)
+            {
+                //Player is moving
+                timer += Time.deltaTime * bobbingSpeed;
+                firstPersonCamera.transform.localPosition = new Vector3(0, originalCameraYPosition + Mathf.Sin(timer) * bobbingAmount, 0);
+            }
+            else
+            {
+                //Idle
+                timer = 0;
+                firstPersonCamera.transform.localPosition = new Vector3(0,
+                    Mathf.Lerp(firstPersonCamera.transform.localPosition.y, originalCameraYPosition,
+                        Time.deltaTime * bobbingSpeed), 0);
+                walkingAudio.enabled = false;
+            }
         }
     }
 
     public void Jump()
     {
-        if (isGrounded)
+        if (isGrounded && !store.activeSelf)
         {
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
         }
@@ -96,21 +102,27 @@ public class PlayerMotor : MonoBehaviour
 
     public void Crouch()
     {
-        crouching = !crouching;
-        crouchTimer = 0;
-        lerpCrouch = true;
+        if (!store.activeSelf)
+        {
+            crouching = !crouching;
+            crouchTimer = 0;
+            lerpCrouch = true;
+        }
     }
 
     public void Sprint()
     {
-        sprinting = !sprinting;
-        if (sprinting)
+        if (!store.activeSelf)
         {
-            speed = 8;
-        }
-        else
-        {
-            speed = 5;
+            sprinting = !sprinting;
+            if (sprinting)
+            {
+                speed = 8;
+            }
+            else
+            {
+                speed = 5;
+            }
         }
     }
 

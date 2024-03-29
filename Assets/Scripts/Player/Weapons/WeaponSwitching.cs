@@ -1,6 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WeaponSwitching : MonoBehaviour
 {
@@ -8,19 +8,24 @@ public class WeaponSwitching : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform[] weapons;
 
+    [SerializeField] private Image[] backgroundImages;
+    
     [Header("Keys")]
     [SerializeField] private KeyCode[] keys;
 
     [Header("Settings")]
     [SerializeField] private float switchTime;
 
+    private AudioSource weaponSwapAudio;
+
     private int selectedWeapon;
     private float timeSinceLastSwitch;
 
     private void Start() {
         SetWeapons();
+        weaponSwapAudio = GetComponent<AudioSource>();
         Select(selectedWeapon);
-
+        
         timeSinceLastSwitch = 0f;
     }
 
@@ -51,9 +56,26 @@ public class WeaponSwitching : MonoBehaviour
     }
 
     private void Select(int weaponIndex) {
+
+        for (int i = 0; i < backgroundImages.Length; i++)
+        {
+            if (i == weaponIndex)
+            {
+                backgroundImages[i].color = new Color(255, 198, 0, 2);
+            }
+            else
+            {
+                backgroundImages[i].color = new Color(175, 175, 175, 0.7f);
+            }
+        }
+        
         for (int i = 0; i < weapons.Length; i++)
         {
-            weapons[i].gameObject.SetActive(i == weaponIndex);
+            if (weapons[i] != null)
+            {
+                weapons[i].gameObject.SetActive(i == weaponIndex);
+                weaponSwapAudio.Play();
+            }
         }
 
         timeSinceLastSwitch = 0f;
@@ -62,4 +84,27 @@ public class WeaponSwitching : MonoBehaviour
     }
 
     private void OnWeaponSelected() {  }
+
+    public void SwapWeapons(List<GunData> currentGuns)
+    {
+        for (int i = 0; i < weapons.Length; i++)
+        {
+            if (weapons[i] != null)
+            {
+                Destroy(weapons[i].gameObject);
+            }
+        }
+        weapons = new Transform[currentGuns.Count];
+
+        GameObject gunPrefab;
+        for (int i = 0; i < currentGuns.Count; i++)
+        {
+            if (currentGuns[i] != null)
+            {
+                gunPrefab = Resources.Load<GameObject>("Guns/" + currentGuns[i].name);
+                weapons[i] = Instantiate(gunPrefab, transform).transform;
+                weapons[i].gameObject.SetActive(i == selectedWeapon);
+            }
+        }
+    }
 }
