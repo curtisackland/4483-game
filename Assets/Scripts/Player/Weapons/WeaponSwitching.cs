@@ -16,13 +16,16 @@ public class WeaponSwitching : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float switchTime;
 
+    private AudioSource weaponSwapAudio;
+
     private int selectedWeapon;
     private float timeSinceLastSwitch;
 
     private void Start() {
         SetWeapons();
+        weaponSwapAudio = GetComponent<AudioSource>();
         Select(selectedWeapon);
-
+        
         timeSinceLastSwitch = 0f;
     }
 
@@ -71,6 +74,7 @@ public class WeaponSwitching : MonoBehaviour
             if (weapons[i] != null)
             {
                 weapons[i].gameObject.SetActive(i == weaponIndex);
+                weaponSwapAudio.Play();
             }
         }
 

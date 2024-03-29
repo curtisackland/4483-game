@@ -11,6 +11,7 @@ public class PlayerMotor : MonoBehaviour
     private bool sprinting;
     private float timer;
     private float originalCameraYPosition;
+    private AudioSource walkingAudio;
 
     public Camera firstPersonCamera;
     public float bobbingSpeed = 14f;
@@ -26,6 +27,7 @@ public class PlayerMotor : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         originalCameraYPosition = firstPersonCamera.transform.localPosition.y;
+        walkingAudio = GetComponents<AudioSource>()[0];
     }
     
     void Update()
@@ -65,7 +67,9 @@ public class PlayerMotor : MonoBehaviour
             playerVelocity.y += gravity * Time.deltaTime;
 
             if (isGrounded && playerVelocity.y < 0)
+            {
                 playerVelocity.y = -2f;
+            }
             controller.Move(playerVelocity * Time.deltaTime);
 
             if (Mathf.Abs(moveDirection.x) > 0.1f || Mathf.Abs(moveDirection.z) > 0.1f)
@@ -74,6 +78,7 @@ public class PlayerMotor : MonoBehaviour
                 timer += Time.deltaTime * bobbingSpeed;
                 firstPersonCamera.transform.localPosition =
                     new Vector3(0, originalCameraYPosition + Mathf.Sin(timer) * bobbingAmount, 0);
+                walkingAudio.enabled = true;
             }
             else
             {
@@ -82,6 +87,7 @@ public class PlayerMotor : MonoBehaviour
                 firstPersonCamera.transform.localPosition = new Vector3(0,
                     Mathf.Lerp(firstPersonCamera.transform.localPosition.y, originalCameraYPosition,
                         Time.deltaTime * bobbingSpeed), 0);
+                walkingAudio.enabled = false;
             }
         }
     }

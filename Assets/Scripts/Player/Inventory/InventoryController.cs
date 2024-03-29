@@ -55,6 +55,10 @@ public class InventoryController : MonoBehaviour
     private GameObject store;
 
     private bool inventoryOpen = false;
+
+    private AudioSource openInventoryAudio;
+    
+    private AudioSource closeInventoryAudio;
     
     void Start()
     {
@@ -101,6 +105,9 @@ public class InventoryController : MonoBehaviour
         ammoCounts["Pistol"] = 300;
         ammoCounts["Shotgun"] = 300;
         ammoCounts["Sniper"] = 300;
+
+        openInventoryAudio = GetComponents<AudioSource>()[1];
+        closeInventoryAudio = GetComponents<AudioSource>()[2];
         
         inventoryUI.GameObject().SetActive(false);
     }
@@ -112,12 +119,14 @@ public class InventoryController : MonoBehaviour
             inventoryOpen = !inventoryOpen;
             if (!inventoryOpen)
             {
+                closeInventoryAudio.Play();
                 inventoryUI.SetActive(false);
                 UnityEngine.Cursor.lockState = CursorLockMode.Locked;
                 UnityEngine.Cursor.visible = false;
             }
             else
             {
+                openInventoryAudio.Play();
                 inventoryUI.SetActive(true);
                 UnityEngine.Cursor.lockState = CursorLockMode.None;
                 UnityEngine.Cursor.visible = true;
