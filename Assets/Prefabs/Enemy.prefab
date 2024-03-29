@@ -685,7 +685,7 @@ MonoBehaviour:
   health: 100
   xpWorth: 40
   monsterPointsWorth: 5
-  gunBarrel: {fileID: 0}
+  gunBarrel: {fileID: 5301999664433052044}
   fireRate: 0
 --- !u!1 &4863896553275487212
 GameObject:
