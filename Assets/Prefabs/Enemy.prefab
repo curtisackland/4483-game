@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5801425777000307598}
   - component: {fileID: 7304808521085677707}
   - component: {fileID: 9023757062737845951}
-  m_Layer: 2
+  m_Layer: 9
   m_Name: Eye (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 8474809947012833205}
   - component: {fileID: 1944135082538062160}
   - component: {fileID: 1087101772585785133}
-  m_Layer: 2
+  m_Layer: 9
   m_Name: Eyebrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 7204125518736153818}
   - component: {fileID: 6600756342792361586}
   - component: {fileID: 6290445623582641736}
-  m_Layer: 2
+  m_Layer: 9
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -329,7 +329,7 @@ GameObject:
   - component: {fileID: 1038006685316508312}
   - component: {fileID: 4689384921654756891}
   - component: {fileID: 1546569050948419015}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Right Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -431,7 +431,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1312106825726801197}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Meshes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -470,7 +470,7 @@ GameObject:
   - component: {fileID: 2434290024857337645}
   - component: {fileID: 1126086302207531253}
   - component: {fileID: 7964461981776733587}
-  m_Layer: 2
+  m_Layer: 9
   m_Name: Eyebrow (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -572,7 +572,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5301999664433052044}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GunBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -604,9 +604,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5110724032446016590}
   - component: {fileID: 3124021739613197650}
-  - component: {fileID: 8174663146700382644}
   - component: {fileID: 5456246724684178396}
-  m_Layer: 0
+  - component: {fileID: 3768200539087439676}
+  m_Layer: 9
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -652,27 +652,6 @@ NavMeshAgent:
   m_BaseOffset: 0.92
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &8174663146700382644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4324196473742850659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fa68ed602531d149beefd360d83c1fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  path: {fileID: 0}
-  sightDistance: 20
-  fieldOfView: 85
-  eyeHeight: 0.5
-  currentState: 
-  health: 100
-  xpWorth: 40
-  gunBarrel: {fileID: 5301999664433052044}
-  fireRate: 1.3
 --- !u!114 &5456246724684178396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -685,6 +664,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86132b527b5a6eb419e4df8e31751b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3768200539087439676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4324196473742850659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2df8dedead2b4049ac0c7ea1f557b846, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  path: {fileID: 0}
+  animator: {fileID: 0}
+  sightDistance: 20
+  fieldOfView: 85
+  eyeHeight: 0.5
+  currentState: 
+  health: 100
+  xpWorth: 40
+  monsterPointsWorth: 5
+  gunBarrel: {fileID: 0}
+  fireRate: 0
 --- !u!1 &4863896553275487212
 GameObject:
   m_ObjectHideFlags: 0
@@ -697,7 +699,7 @@ GameObject:
   - component: {fileID: 7835829300584238931}
   - component: {fileID: 23336910083294145}
   - component: {fileID: 6062724856312622242}
-  m_Layer: 2
+  m_Layer: 9
   m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -806,7 +808,7 @@ GameObject:
   - component: {fileID: 6825720096338597050}
   - component: {fileID: 1304327108425757392}
   - component: {fileID: 2353943667605948384}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Left Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -911,7 +913,7 @@ GameObject:
   - component: {fileID: 8348268440318587624}
   - component: {fileID: 3078864093413208062}
   - component: {fileID: 4352439553676132768}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1067,6 +1069,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 18020d149f384b440ba9bd081ec5386b, type: 3}
       propertyPath: m_Name
       value: AssaultRifle
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 18020d149f384b440ba9bd081ec5386b, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

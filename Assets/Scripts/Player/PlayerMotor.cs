@@ -60,25 +60,25 @@ public class PlayerMotor : MonoBehaviour
     {
         if (!store.activeSelf)
         {
+            Vector3 totalMove = new Vector3();
             Vector3 moveDirection = Vector3.zero;
             moveDirection.x = input.x;
             moveDirection.z = input.y;
-            controller.Move(transform.TransformDirection(moveDirection) * speed * Time.deltaTime);
+            totalMove += transform.TransformDirection(moveDirection) * speed;
             playerVelocity.y += gravity * Time.deltaTime;
 
             if (isGrounded && playerVelocity.y < 0)
-            {
-                playerVelocity.y = -2f;
-            }
-            controller.Move(playerVelocity * Time.deltaTime);
+                playerVelocity = new Vector3(0, -2f, 0);
+            totalMove += playerVelocity;
 
-            if (Mathf.Abs(moveDirection.x) > 0.1f || Mathf.Abs(moveDirection.z) > 0.1f)
+            controller.Move(totalMove * Time.deltaTime);
+
+
+            if(Mathf.Abs(moveDirection.x) > 0.1f || Mathf.Abs(moveDirection.z) > 0.1f)
             {
                 //Player is moving
                 timer += Time.deltaTime * bobbingSpeed;
-                firstPersonCamera.transform.localPosition =
-                    new Vector3(0, originalCameraYPosition + Mathf.Sin(timer) * bobbingAmount, 0);
-                walkingAudio.enabled = true;
+                firstPersonCamera.transform.localPosition = new Vector3(0, originalCameraYPosition + Mathf.Sin(timer) * bobbingAmount, 0);
             }
             else
             {
@@ -124,5 +124,16 @@ public class PlayerMotor : MonoBehaviour
                 speed = 5;
             }
         }
+    }
+
+    public void AddKnockback(Vector3 sourcePosition, float strength)
+    {
+        var knockDirection = transform.position - sourcePosition;
+        knockDirection.y = 0;
+        knockDirection = knockDirection.normalized;
+        knockDirection.y = 1;
+            
+        Debug.Log(knockDirection.normalized * strength);
+        playerVelocity += knockDirection.normalized * strength;
     }
 }

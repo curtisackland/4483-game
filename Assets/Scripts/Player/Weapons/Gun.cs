@@ -73,7 +73,7 @@ public class Gun : MonoBehaviour
         ammoTypeImage = temp.ammoTypeImage;
         inventory = temp.inventoryController;
         
-        layerMask = LayerMask.GetMask("Default", "Water", "Spawnable");
+        layerMask = LayerMask.GetMask("Default", "Water", "Spawnable", "Enemy");
         gunScopeIn = GetComponent<ScopeIn>();
         gunRecoil = GetComponent<GunRecoil>();
         gunshotAudio = GetComponents<AudioSource>()[0];

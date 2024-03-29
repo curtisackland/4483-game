@@ -2,9 +2,11 @@
 
 public class EnemyMeleeZombie : EnemyMelee
 {
+    private float lastAttackTimer;
+
     public override void DoAttackState()
     {
-        if (!CanSeePlayer())
+        if (!CanSeePlayer(false))
         {
             losePlayerTimer += Time.deltaTime;
             if (losePlayerTimer > 8)
@@ -47,7 +49,7 @@ public class EnemyMeleeZombie : EnemyMelee
 
     public override void DoPatrolState()
     {
-        if (CanSeePlayer())
+        if (CanSeePlayer(true))
         {
             stateMachine.ChangeState(new AttackState());
         }
@@ -68,7 +70,7 @@ public class EnemyMeleeZombie : EnemyMelee
     
     public override void DoSearchState()
     {
-        if (CanSeePlayer())
+        if (CanSeePlayer(true))
         {
             stateMachine.ChangeState(new AttackState());
         }

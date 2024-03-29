@@ -57,7 +57,6 @@ public abstract class Enemy : MonoBehaviour, Damageable
     // Update is called once per frame
     public virtual void Update()
     {
-        CanSeePlayer();
         currentState = stateMachine.activeState.ToString();
     }
 
@@ -71,7 +70,7 @@ public abstract class Enemy : MonoBehaviour, Damageable
         return player;
     }
 
-    public bool CanSeePlayer()
+    public bool CanSeePlayer(bool useViewAngle)
     {
         if (player != null)
         {
@@ -81,12 +80,12 @@ public abstract class Enemy : MonoBehaviour, Damageable
                 // if player is in field of view
                 Vector3 targetDirection = player.transform.position - transform.position - (Vector3.up * eyeHeight);
                 float angleToPlayer = Vector3.Angle(targetDirection, transform.forward);
-                if (angleToPlayer >= -fieldOfView && angleToPlayer <= fieldOfView)
+                if ((angleToPlayer >= -fieldOfView && angleToPlayer <= fieldOfView) || !useViewAngle)
                 {
                     // if enemy can actually see the player
                     Ray ray = new Ray(transform.position + (Vector3.up * eyeHeight), targetDirection);
-                    RaycastHit hitInfo = new RaycastHit();
-                    if (Physics.Raycast(ray, out hitInfo, sightDistance))
+                    RaycastHit hitInfo;
+                    if (Physics.Raycast(ray, out hitInfo, sightDistance, LayerMask.NameToLayer("Enemy")))
                     {
                         if (hitInfo.transform.gameObject == player)
                         {
