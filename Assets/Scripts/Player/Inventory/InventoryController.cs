@@ -63,12 +63,12 @@ public class InventoryController : MonoBehaviour
     void Start()
     {
         weaponSlots[0].sprite = Resources.Load<Sprite>("WeaponOutlines/AK Blue");
-        weaponSlots[1].sprite = Resources.Load<Sprite>("WeaponOutlines/Silenced Pistol Blue");
+        weaponSlots[1].sprite = Resources.Load<Sprite>("WeaponOutlines/Blank Gun");
         weaponSlots[2].sprite = Resources.Load<Sprite>("WeaponOutlines/Blank Gun");
         weaponSlots[3].sprite = Resources.Load<Sprite>("WeaponOutlines/Blank Gun");
         
         inventoryGunImages[0].sprite = Resources.Load<Sprite>("WeaponOutlines/AK Blue");
-        inventoryGunImages[1].sprite = Resources.Load<Sprite>("WeaponOutlines/Silenced Pistol Blue");
+        inventoryGunImages[1].sprite = Resources.Load<Sprite>("WeaponOutlines/Blank Gun");
         inventoryGunImages[2].sprite = Resources.Load<Sprite>("WeaponOutlines/Blank Gun");
         inventoryGunImages[3].sprite = Resources.Load<Sprite>("WeaponOutlines/Blank Gun");
         inventoryGunImages[4].sprite = Resources.Load<Sprite>("WeaponOutlines/Blank Gun");
@@ -77,7 +77,7 @@ public class InventoryController : MonoBehaviour
         inventoryGunImages[7].sprite = Resources.Load<Sprite>("WeaponOutlines/Blank Gun");
         
         inventoryWeaponSlotImages[0].sprite = Resources.Load<Sprite>("WeaponOutlines/AK Blue");
-        inventoryWeaponSlotImages[1].sprite = Resources.Load<Sprite>("WeaponOutlines/Silenced Pistol Blue");
+        inventoryWeaponSlotImages[1].sprite = Resources.Load<Sprite>("WeaponOutlines/Blank Gun");
         inventoryWeaponSlotImages[2].sprite = Resources.Load<Sprite>("WeaponOutlines/Blank Gun");
         inventoryWeaponSlotImages[3].sprite = Resources.Load<Sprite>("WeaponOutlines/Blank Gun");
 
@@ -86,9 +86,9 @@ public class InventoryController : MonoBehaviour
         
         // Start with these two guns
         GunData ak47 = Resources.Load<GunData>("Gun Objects/Assault Rifle/AK47");
-        GunData silencedPistol = Resources.Load<GunData>("Gun Objects/Pistol/Silenced Pistol");
+
         inventoryGunData.Add(ak47);
-        inventoryGunData.Add(silencedPistol);
+        inventoryGunData.Add(null);
         inventoryGunData.Add(null);
         inventoryGunData.Add(null);
         inventoryGunData.Add(null);
@@ -97,14 +97,14 @@ public class InventoryController : MonoBehaviour
         inventoryGunData.Add(null);
         
         weaponSlotsGunData.Add(ak47);
-        weaponSlotsGunData.Add(silencedPistol);
+        weaponSlotsGunData.Add(null);
         weaponSlotsGunData.Add(null);
         weaponSlotsGunData.Add(null);
 
         ammoCounts["AR"] = 300;
-        ammoCounts["Pistol"] = 300;
-        ammoCounts["Shotgun"] = 300;
-        ammoCounts["Sniper"] = 300;
+        ammoCounts["Pistol"] = 240;
+        ammoCounts["Shotgun"] = 180;
+        ammoCounts["Sniper"] = 60;
 
         openInventoryAudio = GetComponents<AudioSource>()[1];
         closeInventoryAudio = GetComponents<AudioSource>()[2];
@@ -282,7 +282,7 @@ public class InventoryController : MonoBehaviour
                 break;
             case "Pistol":
                 ammoCounts["Pistol"] += amount;
-                ammoCounts["Pistol"] = Math.Clamp(ammoCounts["Pistol"], 0, 60);
+                ammoCounts["Pistol"] = Math.Clamp(ammoCounts["Pistol"], 0, 240);
                 break;
             case "Shotgun":
                 ammoCounts["Shotgun"] += amount;
