@@ -9,8 +9,8 @@ using UnityEngine.UI;
 public class Gun : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField]
-    private GunData gunData;
+    
+    public GunData gunData;
 
     private TextMeshProUGUI currentMagAmmo;
 

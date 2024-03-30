@@ -40,5 +40,8 @@ MonoBehaviour:
   kickBackAmount: -0.5
   kickBackSpeed: 10
   gunReturnSpeed: 20
+  monsterPointsCost: 0
+  requiredXPLevel: 0
+  owned: 1
   outlineAssetName: Sniper Blue
   reloading: 0

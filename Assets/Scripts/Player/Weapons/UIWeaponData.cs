@@ -19,4 +19,6 @@ public class UIWeaponData : MonoBehaviour
     public Image ammoTypeImage;
 
     public InventoryController inventoryController;
+
+    public Image scopeOverlay;
 }
