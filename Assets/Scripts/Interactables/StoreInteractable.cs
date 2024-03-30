@@ -45,6 +45,7 @@ public class StoreInteractable : Interactable
         if (!isStoreActive)
         {
             timer += Time.deltaTime;
+            promptMessage = "E to Open Store";
         }
     }
 }
