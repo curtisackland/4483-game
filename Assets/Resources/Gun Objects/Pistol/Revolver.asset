@@ -19,7 +19,7 @@ MonoBehaviour:
     choice for self-defense, law enforcement, and recreational shooting. Revolvers
     are known for their distinctive appearance and timeless appeal, offering shooters
     a classic and reliable firearm option.
-  damage: 75
+  damage: 100
   maxDistance: 500
   bulletsPerShot: 1
   bulletSpread: 0
@@ -40,8 +40,8 @@ MonoBehaviour:
   kickBackAmount: -3
   kickBackSpeed: 10
   gunReturnSpeed: 20
-  monsterPointsCost: 0
-  requiredXPLevel: 0
+  monsterPointsCost: 100
+  requiredXPLevel: 5
   owned: 0
   outlineAssetName: Revolver Blue
   reloading: 0

@@ -19,12 +19,12 @@ MonoBehaviour:
     of 5.56x45mm NATO. The M4A1 features a collapsible stock, Picatinny rails for
     attaching accessories, and a compact design suitable for close-quarters combat
     while maintaining effectiveness at medium range.
-  damage: 50
+  damage: 40
   maxDistance: 1000
   bulletsPerShot: 1
   bulletSpread: 0
   bulletSpeed: 200
-  currentAmmo: 29
+  currentAmmo: 30
   magSize: 30
   fireRate: 700
   reloadTime: 1.2
@@ -40,5 +40,8 @@ MonoBehaviour:
   kickBackAmount: -0.5
   kickBackSpeed: 10
   gunReturnSpeed: 20
+  monsterPointsCost: 200
+  requiredXPLevel: 10
+  owned: 0
   outlineAssetName: M4 Blue
   reloading: 0

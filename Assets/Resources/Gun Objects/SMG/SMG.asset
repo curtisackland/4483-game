@@ -18,12 +18,12 @@ MonoBehaviour:
     it lethal in tight spaces, ideal for engaging multiple targets quickly and effectively.
     With its devastating firepower and ease of handling, the SMG is a deadly weapon
     favored by special forces, law enforcement, and close-proximity combat situations.'
-  damage: 25
+  damage: 20
   maxDistance: 300
   bulletsPerShot: 1
   bulletSpread: 0
   bulletSpeed: 200
-  currentAmmo: 49
+  currentAmmo: 50
   magSize: 50
   fireRate: 900
   reloadTime: 1
@@ -39,5 +39,8 @@ MonoBehaviour:
   kickBackAmount: -0.5
   kickBackSpeed: 10
   gunReturnSpeed: 20
+  monsterPointsCost: 125
+  requiredXPLevel: 10
+  owned: 0
   outlineAssetName: SMG Blue
   reloading: 0
