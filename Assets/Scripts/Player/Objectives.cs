@@ -13,8 +13,10 @@ public class Objectives : MonoBehaviour
     public GameObject demonBossGate;
     public GameObject demonBoss;
     public GameObject monkeyBoss;
+    public GameObject mutantBoss;
     
     private TextMeshProUGUI objectiveText;
+    //private 
 
     private string[] objectives;
 
@@ -39,13 +41,15 @@ public class Objectives : MonoBehaviour
         {
             completedObjectives++;
             demonBossGate.SetActive(false);
-        } else if (completedObjectives == 1 && demonBoss.IsDestroyed())
+            demonBoss.SetActive(true);
+        } else if (completedObjectives == 1 && demonBoss == null)
         {
             // TODO insert boss completion here
             completedObjectives++;
         } else if (completedObjectives == 2 && playerStats.GetXP() >= 2)
         {
             completedObjectives++;
+            monkeyBoss.SetActive(true);
         } else if (completedObjectives == 3)
         {
             // TODO insert boss completion here

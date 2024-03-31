@@ -26,7 +26,6 @@ public class EnemyBossMutant : Enemy
     private string lastAttackMove = "";
     private float lastAttackEndTime;
 
-    public GameObject monkeyRotator;
     private Quaternion defaultAngle = Quaternion.Euler(0, 180, 0);
     private Quaternion offsetAngle = Quaternion.Euler(0, 180, 0);
 
@@ -94,8 +93,6 @@ public class EnemyBossMutant : Enemy
             offsetAngle = defaultAngle;
         }
 
-        monkeyRotator.transform.localRotation = Quaternion.RotateTowards(monkeyRotator.transform.localRotation, offsetAngle, 500f * Time.deltaTime);
-        
         SetWalkingAnimationFromNav();
     }
 
