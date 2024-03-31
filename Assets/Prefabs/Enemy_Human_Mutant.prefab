@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &457185365496813427
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6187042860990193856}
+  m_Layer: 9
+  m_Name: LaunchSource
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6187042860990193856
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 457185365496813427}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4247441802271801924}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4247441802271414560
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1086,7 +1117,10 @@ PrefabInstance:
       objectReference: {fileID: 4247441802271802352}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 400228, guid: 1eef84744a802a64cbe7647c0d499e78, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6187042860990193856}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100258, guid: 1eef84744a802a64cbe7647c0d499e78, type: 3}
       insertIndex: -1
@@ -2222,19 +2256,21 @@ MonoBehaviour:
   fieldOfView: 85
   eyeHeight: 0.5
   currentState: 
-  health: 100
+  health: 2000
   xpWorth: 40
   monsterPointsWorth: 5
   agentSpeed: 2.5
   fastAttackCooldown: 3
   fastAttackTime: 2
-  shatterObject: {fileID: 0}
-  shatterCooldown: 15
-  shatterTime: 4
+  launchedObject: {fileID: 7721865956071670010, guid: b2a17993783ee2545a07a72d525ec6ec, type: 3}
+  launchSource: {fileID: 457185365496813427}
+  projectileCooldown: 15
+  projectileTime: 4
   shatterWindupTime: 1.5
   losePlayerTime: 5
-  monkeyRotator: {fileID: 0}
   meleeCollider: {fileID: 0}
+  homeArea: {fileID: 0}
+  homeAreaRadius: 0
 --- !u!114 &2076084983064224671
 MonoBehaviour:
   m_ObjectHideFlags: 0

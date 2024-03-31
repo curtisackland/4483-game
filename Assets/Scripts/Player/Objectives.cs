@@ -8,12 +8,13 @@ using UnityEngine;
 
 public class Objectives : MonoBehaviour
 {
-
+    public PauseMenuController endGameMenu;
     public PlayerXP playerStats;
     public GameObject demonBossGate;
     public GameObject demonBoss;
     public GameObject monkeyBoss;
     public GameObject mutantBoss;
+    
     
     private TextMeshProUGUI objectiveText;
     //private 
@@ -26,11 +27,11 @@ public class Objectives : MonoBehaviour
         objectiveText = GetComponent<TextMeshProUGUI>();
         objectives = new string[7];
         objectives[0] = "Reach XP level 10";
-        objectives[1] = "Kill the boss in the North of Area 52";
+        objectives[1] = "Kill the boss Demon in the North East";
         objectives[2] = "Reach XP level 20";
-        objectives[3] = "Kill the boss in the East of Area 52";
+        objectives[3] = "Kill the boss Monkey in the South East";
         objectives[4] = "Reach XP level 30";
-        objectives[5] = "Kill the boss in the South of Area 52";
+        objectives[5] = "Kill the final boss in the North West";
         objectives[6] = "Win the game!";
     }
     
@@ -42,7 +43,7 @@ public class Objectives : MonoBehaviour
             completedObjectives++;
             demonBossGate.SetActive(false);
             demonBoss.SetActive(true);
-        } else if (completedObjectives == 1 && demonBoss == null)
+        } else if (completedObjectives == 1 && demonBoss.IsDestroyed())
         {
             // TODO insert boss completion here
             completedObjectives++;
@@ -50,17 +51,19 @@ public class Objectives : MonoBehaviour
         {
             completedObjectives++;
             monkeyBoss.SetActive(true);
-        } else if (completedObjectives == 3)
+        } else if (completedObjectives == 3 && monkeyBoss.IsDestroyed())
         {
             // TODO insert boss completion here
             completedObjectives++;
         } else if (completedObjectives == 4 && playerStats.GetXP() >= 3)
         {
             completedObjectives++;
-        } else if (completedObjectives == 5)
+            mutantBoss.SetActive(true);
+        } else if (completedObjectives == 5 && mutantBoss.IsDestroyed())
         {
             // TODO insert boss completion here
             completedObjectives++;
+            endGameMenu.isEnd = true;
         }
     }
 }

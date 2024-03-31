@@ -29,9 +29,11 @@ public class EnemyBossMonkey : Enemy
     public GameObject monkeyRotator;
     private Quaternion defaultAngle = Quaternion.Euler(0, 180, 0);
     private Quaternion offsetAngle = Quaternion.Euler(0, 180, 0);
+    private float moveTimer;
 
     public MeleeCollider meleeCollider;
-    
+    public GameObject homeArea;
+    public float homeAreaRadius;
     
     // Update is called once per frame
     public override void Update()
@@ -50,7 +52,7 @@ public class EnemyBossMonkey : Enemy
             Agent().SetDestination(Player().transform.position + (Player().transform.position - transform.position).normalized * 2f);
             if (lastAttackMove == "") // No attack is currently happening
             {
-                if (Random.value < 0.5f) // Randomly start new attack
+                if (Random.Range(0, 1) < 0.1f) // Randomly start new attack
                 {
                     float distanceFromPlayer = (transform.position - Player().transform.position).magnitude;
                     if (distanceFromPlayer < 3f && fastAttackLastTime + fastAttackCooldown < Time.time)
@@ -62,7 +64,7 @@ public class EnemyBossMonkey : Enemy
                         Agent().speed = 0;
                         offsetAngle = Quaternion.Euler(0, 220, 0);
                     }
-                    else if (distanceFromPlayer < 18f && shatterLastTime + shatterCooldown < Time.time)
+                    else if (distanceFromPlayer < 15f && shatterLastTime + shatterCooldown < Time.time)
                     {
                         lastAttackMove = "Shatter";
                         shatterLastTime = Time.time;
@@ -71,6 +73,7 @@ public class EnemyBossMonkey : Enemy
                         Agent().speed = 0;
 
                         var shatter = Instantiate(shatterObject, transform.position, transform.rotation);
+                        
                         var ps = shatter.GetComponent<ParticleSystem>();
                         var psMain = ps.main;
                         psMain.startDelay = shatterWindupTime;
@@ -107,7 +110,23 @@ public class EnemyBossMonkey : Enemy
         }
         else
         {
-            transform.Rotate(0, 1, 0);
+            moveTimer += Time.deltaTime;
+            if (moveTimer > Random.Range(5, 7))
+            {
+                // randomly move enemy while attacking
+                if (Agent().isOnNavMesh)
+                {
+                    if (homeArea == null)
+                    {
+                        Agent().SetDestination(transform.position + (Random.insideUnitSphere * 10));
+                    }
+                    else
+                    {
+                        Agent().SetDestination(homeArea.transform.position + (Random.insideUnitSphere * homeAreaRadius));
+                    }
+                }
+                moveTimer = 0;
+            }
         }
     }
 

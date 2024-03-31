@@ -109,7 +109,7 @@ public abstract class Enemy : MonoBehaviour, Damageable
     public void Damage(float damageAmount)
     {
         health -= damageAmount;
-        
+        stateMachine.ChangeState(new AttackState());
         if (health <= 0)
         {
             PlayerXP p = player.GetComponent<PlayerXP>();

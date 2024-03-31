@@ -14,12 +14,12 @@ public class EnemyBossMutant : Enemy
     public float fastAttackTime = 2f;
     private float fastAttackLastTime;
 
-    [Header("Shatter Attack")] 
-    public GameObject shatterObject;
-    public float shatterCooldown = 15f;
-    public float shatterTime = 4f;
-    public float shatterWindupTime = 1.5f;
-    private float shatterLastTime;
+    public GameObject launchedObject;
+    public GameObject launchSource;
+    public float projectileCooldown = 15f;
+    public float projectileTime = 4f;
+    [FormerlySerializedAs("shatterWindupTime")] public float throwWindupTime = 1.5f;
+    private float projectileLastTime;
 
     [Header("Attack State")]
     public float losePlayerTime = 5f;
@@ -30,7 +30,9 @@ public class EnemyBossMutant : Enemy
     private Quaternion offsetAngle = Quaternion.Euler(0, 180, 0);
 
     public MeleeCollider meleeCollider;
-    
+    public GameObject homeArea;
+    public float homeAreaRadius;
+
     
     // Update is called once per frame
     public override void Update()
@@ -57,22 +59,22 @@ public class EnemyBossMutant : Enemy
                         lastAttackMove = "FastAttack";
                         fastAttackLastTime = Time.time;
                         lastAttackEndTime = Time.time + fastAttackTime;
-                        animator.Play("MK_quickSwipe", 0);
+                        animator.Play("Attack(3)", 0);
                         Agent().speed = 0;
                         offsetAngle = Quaternion.Euler(0, 220, 0);
                     }
-                    else if (distanceFromPlayer < 18f && shatterLastTime + shatterCooldown < Time.time)
+                    else if (distanceFromPlayer < 18f && projectileLastTime + projectileCooldown < Time.time)
                     {
-                        lastAttackMove = "Shatter";
-                        shatterLastTime = Time.time;
-                        lastAttackEndTime = Time.time + shatterTime;
-                        animator.Play("MK_stabJumpFward", 0);
+                        lastAttackMove = "Projectile";
+                        projectileLastTime = Time.time;
+                        lastAttackEndTime = Time.time + projectileTime;
+                        animator.Play("Shout", 0);
                         Agent().speed = 0;
-
-                        var shatter = Instantiate(shatterObject, transform.position, transform.rotation);
-                        var ps = shatter.GetComponent<ParticleSystem>();
+                        
+                        var shatter = Instantiate(launchedObject, transform.position, transform.rotation);
+                        var ps = shatter.GetComponentInChildren<ParticleSystem>();
                         var psMain = ps.main;
-                        psMain.startDelay = shatterWindupTime;
+                        psMain.startDelay = throwWindupTime;
                     }
                 }
             } 
@@ -92,8 +94,6 @@ public class EnemyBossMutant : Enemy
             Agent().speed = agentSpeed;
             offsetAngle = defaultAngle;
         }
-
-        SetWalkingAnimationFromNav();
     }
 
     public override void DoPatrolState()
@@ -111,19 +111,5 @@ public class EnemyBossMutant : Enemy
     public override void DoSearchState()
     {
         stateMachine.ChangeState(new PatrolState());
-    }
-
-    private void SetWalkingAnimationFromNav()
-    {
-        if (Agent().velocity.magnitude > 0.2f && Agent().remainingDistance > 1f)
-        {
-            animator.SetBool("isWalking", true);
-        }
-        else
-        {
-            animator.SetBool("isWalking", true);
-        }
-
-        animator.SetFloat("walkSpeed", Agent().velocity.magnitude / agentSpeed);
     }
 }
