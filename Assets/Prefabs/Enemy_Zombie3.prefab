@@ -958,13 +958,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: {fileID: 0}
   animator: {fileID: 7156015651742468591}
-  sightDistance: 20
+  sightDistance: 30
   fieldOfView: 85
   eyeHeight: 0.5
   currentState: 
-  health: 100
-  xpWorth: 40
-  monsterPointsWorth: 5
+  health: 400
+  xpWorth: 35
+  monsterPointsWorth: 10
   attackDistance: 2
   followDistance: 1.5
   attackRate: 1

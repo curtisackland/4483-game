@@ -1515,13 +1515,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: {fileID: 0}
   animator: {fileID: 7748594938604788466}
-  sightDistance: 20
+  sightDistance: 50
   fieldOfView: 85
   eyeHeight: 0.5
   currentState: 
-  health: 2000
-  xpWorth: 40
-  monsterPointsWorth: 5
+  health: 5000
+  xpWorth: 50
+  monsterPointsWorth: 20
   agentSpeed: 2.5
   fastAttackCooldown: 3
   fastAttackTime: 2
@@ -1531,7 +1531,9 @@ MonoBehaviour:
   shatterWindupTime: 1.5
   losePlayerTime: 5
   monkeyRotator: {fileID: 4098368317719126614}
-  meleeCollider: {fileID: 152182643933792016}
+  meleeTrigger: {fileID: 152182643933792016}
+  homeArea: {fileID: 0}
+  homeAreaRadius: 0
 --- !u!195 &1650106112723197040
 NavMeshAgent:
   m_ObjectHideFlags: 0

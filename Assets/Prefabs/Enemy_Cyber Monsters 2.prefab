@@ -3448,13 +3448,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: {fileID: 0}
   animator: {fileID: 95450259988899018}
-  sightDistance: 20
+  sightDistance: 40
   fieldOfView: 85
   eyeHeight: 0.5
   currentState: 
-  health: 100
-  xpWorth: 40
-  monsterPointsWorth: 5
+  health: 300
+  xpWorth: 25
+  monsterPointsWorth: 7
   gunBarrel: {fileID: 1553744949267115926}
   fireRate: 0
   fireTime: 2

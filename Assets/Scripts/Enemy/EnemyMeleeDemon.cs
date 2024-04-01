@@ -18,7 +18,7 @@ public class EnemyMeleeDemon : EnemyMelee
         if (CanSeePlayer(false))
         {
             losePlayerTimer = 0;
-            Agent().SetDestination((transform.position - Player().transform.position).normalized * followDistance + Player().transform.position);
+            SetNavDestinationWithSpace(followDistance);
             LastKnowPos = Player().transform.position;
             if (lastAttackEndTime < Time.time && !isAttacking)
             {

@@ -673,15 +673,17 @@ MonoBehaviour:
   fieldOfView: 85
   eyeHeight: 0.5
   currentState: 
-  health: 1000
+  health: 3000
   xpWorth: 40
-  monsterPointsWorth: 5
+  monsterPointsWorth: 15
   attackDistance: 2
   followDistance: 1
   attackRate: 1
   hitAttackDistance: 5
   hitAttackTime: 3
   hitAttackCooldown: 3
+  homeArea: {fileID: 0}
+  homeAreaRadius: 0
 --- !u!114 &5227669865996108663
 MonoBehaviour:
   m_ObjectHideFlags: 0

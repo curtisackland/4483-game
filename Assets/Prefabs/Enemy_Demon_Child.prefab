@@ -82,15 +82,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6025909026807674453, guid: 83d6f155945ff374eaae679fd4a07a38, type: 3}
       propertyPath: health
-      value: 100
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 6025909026807674453, guid: 83d6f155945ff374eaae679fd4a07a38, type: 3}
       propertyPath: xpWorth
-      value: 4
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6025909026807674453, guid: 83d6f155945ff374eaae679fd4a07a38, type: 3}
       propertyPath: hitAttackDistance
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6025909026807674453, guid: 83d6f155945ff374eaae679fd4a07a38, type: 3}
+      propertyPath: monsterPointsWorth
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

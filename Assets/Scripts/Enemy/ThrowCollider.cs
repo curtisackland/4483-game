@@ -12,6 +12,8 @@ public class ThrowCollider : MonoBehaviour
     public float knockbackVelocity; 
     public bool damageEnabled = false;
 
+    public GameObject fireballExplosion;
+
     private bool startedMoving = false;
     private float timeAlive;
     private Vector3 startingPos;
@@ -56,10 +58,11 @@ public class ThrowCollider : MonoBehaviour
         
         if (damageEnabled && hitTransform.CompareTag("Player"))
         {
-            Debug.Log("Shatter Hit");
+            Debug.Log("Fireball Hit");
             hitTransform.GetComponent<PlayerHealth>().TakeDamage(damage);
             hitTransform.GetComponent<PlayerMotor>().AddKnockback(transform.position, knockbackVelocity);
-            Destroy(gameObject);
         }
+        Instantiate(fireballExplosion, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 }

@@ -21,7 +21,7 @@ public class EnemyMeleeZombie : EnemyMelee
         {
             losePlayerTimer = 0;
             SetRunningSpeed(1);
-            Agent().SetDestination((transform.position - Player().transform.position).normalized * followDistance + Player().transform.position);
+            SetNavDestinationWithSpace(followDistance);
             LastKnowPos = Player().transform.position;
             lastAttackTimer += Time.deltaTime;
             if (lastAttackTimer < attackRate)

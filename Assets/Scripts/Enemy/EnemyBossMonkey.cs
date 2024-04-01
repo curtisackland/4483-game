@@ -31,7 +31,7 @@ public class EnemyBossMonkey : Enemy
     private Quaternion offsetAngle = Quaternion.Euler(0, 180, 0);
     private float moveTimer;
 
-    public MeleeCollider meleeCollider;
+    [FormerlySerializedAs("meleeCollider")] public MeleeTrigger meleeTrigger;
     public GameObject homeArea;
     public float homeAreaRadius;
     
@@ -49,7 +49,7 @@ public class EnemyBossMonkey : Enemy
             // Debug.Log(transform.position);
             // Debug.Log(Player().transform.position + (Player().transform.position - transform.position).normalized * 2f);
             // Debug.Log(Player().transform.position);
-            Agent().SetDestination(Player().transform.position + (Player().transform.position - transform.position).normalized * 2f);
+            SetNavDestinationWithSpace(2f);
             if (lastAttackMove == "") // No attack is currently happening
             {
                 if (Random.Range(0, 1) < 0.1f) // Randomly start new attack

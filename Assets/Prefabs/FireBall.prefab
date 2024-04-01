@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7999423061601440558}
   - component: {fileID: 7739543199619961129}
+  - component: {fileID: 4780866694112760780}
   m_Layer: 0
   m_Name: FireBall
   m_TagString: Untagged
@@ -46,13 +47,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62a3c7ded2a74934986c2655e6cbdf1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shatterParent: {fileID: 0}
-  speed: 1
+  speed: 20
   startDelay: 2
-  maxDistance: 15
-  damage: 10
-  knockbackVelocity: 0
+  maxDistance: 30
+  damage: 15
+  knockbackVelocity: 1
   damageEnabled: 0
+  fireballExplosion: {fileID: 3540579170807287507, guid: 1f239adde9740ca448706c347d1bf4e9, type: 3}
+--- !u!135 &4780866694112760780
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7721865956071670010}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 512
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8036042392179120821
 GameObject:
   m_ObjectHideFlags: 0
@@ -62,7 +84,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4342171138807733537}
-  - component: {fileID: 4762876530539620817}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -85,27 +106,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7999423061601440558}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &4762876530539620817
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8036042392179120821}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &7618440685209466298
 PrefabInstance:
   m_ObjectHideFlags: 0
