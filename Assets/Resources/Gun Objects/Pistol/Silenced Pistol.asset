@@ -20,12 +20,12 @@ MonoBehaviour:
     special forces, covert operatives, and for clandestine operations where stealth
     is paramount. Silenced pistols offer enhanced stealth capabilities while maintaining
     lethality, often used in scenarios requiring quiet engagement or covert assassinations.
-  damage: 25
+  damage: 30
   maxDistance: 500
   bulletsPerShot: 1
   bulletSpread: 0
   bulletSpeed: 200
-  currentAmmo: 0
+  currentAmmo: 15
   magSize: 15
   fireRate: 300
   reloadTime: 1
@@ -41,5 +41,8 @@ MonoBehaviour:
   kickBackAmount: -0.5
   kickBackSpeed: 10
   gunReturnSpeed: 20
+  monsterPointsCost: 0
+  requiredXPLevel: 0
+  owned: 1
   outlineAssetName: Silenced Pistol Blue
   reloading: 0

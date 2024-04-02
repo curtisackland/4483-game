@@ -19,7 +19,7 @@ MonoBehaviour:
     precision, striking fear into the hearts of adversaries. Its telescopic sights
     and powerful rounds make it the weapon of choice for taking out high-value targets
     and exerting dominance on the battlefield from afar.
-  damage: 100
+  damage: 400
   maxDistance: 2000
   bulletsPerShot: 1
   bulletSpread: 0
@@ -40,8 +40,8 @@ MonoBehaviour:
   kickBackAmount: -0.5
   kickBackSpeed: 10
   gunReturnSpeed: 20
-  monsterPointsCost: 0
-  requiredXPLevel: 0
-  owned: 1
+  monsterPointsCost: 350
+  requiredXPLevel: 25
+  owned: 0
   outlineAssetName: Sniper Blue
   reloading: 0

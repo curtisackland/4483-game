@@ -18,7 +18,7 @@ MonoBehaviour:
     weapon, capable of incapacitating targets at close range with brutal efficiency.
     Whether for hunting large game, defending against threats, or engaging in combat,
     the shotgun is a formidable choice for those who demand lethal firepower.
-  damage: 75
+  damage: 40
   maxDistance: 250
   bulletsPerShot: 8
   bulletSpread: 3
@@ -39,5 +39,8 @@ MonoBehaviour:
   kickBackAmount: -3
   kickBackSpeed: 10
   gunReturnSpeed: 20
+  monsterPointsCost: 350
+  requiredXPLevel: 25
+  owned: 0
   outlineAssetName: Shotgun Blue
   reloading: 0

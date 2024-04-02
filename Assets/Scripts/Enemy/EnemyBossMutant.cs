@@ -1,38 +1,55 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class EnemyBossMutant : Enemy
 {
-    [Header("Monkey settings")]
+    [Header("Mutant settings")]
     public float agentSpeed = 2.5f;
-    
-    [Header("Whirl Attack")]
+
+    [Header("Melee Attack")] 
+    public float fastAttackRange;
     public float fastAttackCooldown = 3f;
     public float fastAttackTime = 2f;
+    public float fastAttackDamage = 10f;
+    public AudioSource fastAttackSound;
     private float fastAttackLastTime;
 
-    [Header("Shatter Attack")] 
-    public GameObject shatterObject;
-    public float shatterCooldown = 15f;
-    public float shatterTime = 4f;
-    public float shatterWindupTime = 1.5f;
-    private float shatterLastTime;
+    [Header("Fireball Attack")] 
+    public float fireballAttackRange;
+    public GameObject launchedObject;
+    public GameObject launchSource;
+    public float projectileCooldown = 15f;
+    public float projectileTime = 4f;
+    [FormerlySerializedAs("shatterWindupTime")] public float throwWindupTime = 0.5f;
+    public AudioSource fireballLaunchSound;
+    public AudioSource fireballAttackSound;
+    private float projectileLastTime;
 
     [Header("Attack State")]
     public float losePlayerTime = 5f;
     private string lastAttackMove = "";
     private float lastAttackEndTime;
+    private bool isMeleeAttacking = false;
 
-    public GameObject monkeyRotator;
     private Quaternion defaultAngle = Quaternion.Euler(0, 180, 0);
     private Quaternion offsetAngle = Quaternion.Euler(0, 180, 0);
+    private float moveTimer;
 
-    public MeleeCollider meleeCollider;
-    
-    
+    // public List<MeleeTrigger> meleeColliders = new();
+    public GameObject homeArea;
+    public float homeAreaRadius;
+
+    public void Awake()
+    {
+        // SetCollidersDamage(false);
+    }
+
     // Update is called once per frame
     public override void Update()
     {
@@ -44,36 +61,41 @@ public class EnemyBossMutant : Enemy
         if (CanSeePlayer(false))
         {
             losePlayerTimer = 0;
-            // Debug.Log(transform.position);
-            // Debug.Log(Player().transform.position + (Player().transform.position - transform.position).normalized * 2f);
-            // Debug.Log(Player().transform.position);
-            Agent().SetDestination(Player().transform.position + (Player().transform.position - transform.position).normalized * 2f);
+            SetNavDestinationWithSpace(6f);
+
             if (lastAttackMove == "") // No attack is currently happening
             {
                 if (Random.value < 0.5f) // Randomly start new attack
                 {
                     float distanceFromPlayer = (transform.position - Player().transform.position).magnitude;
-                    if (distanceFromPlayer < 3f && fastAttackLastTime + fastAttackCooldown < Time.time)
+                    if (distanceFromPlayer < fastAttackRange && fastAttackLastTime + fastAttackCooldown < Time.time)
                     {
                         lastAttackMove = "FastAttack";
                         fastAttackLastTime = Time.time;
                         lastAttackEndTime = Time.time + fastAttackTime;
-                        animator.Play("MK_quickSwipe", 0);
+                        animator.Play("Attack(3)", 0);
                         Agent().speed = 0;
                         offsetAngle = Quaternion.Euler(0, 220, 0);
+                        Player().GetComponent<PlayerHealth>().TakeDamage(fastAttackDamage);
+                        // SetCollidersDamage(true);
                     }
-                    else if (distanceFromPlayer < 18f && shatterLastTime + shatterCooldown < Time.time)
+                    else if (distanceFromPlayer < fireballAttackRange && projectileLastTime + projectileCooldown < Time.time)
                     {
-                        lastAttackMove = "Shatter";
-                        shatterLastTime = Time.time;
-                        lastAttackEndTime = Time.time + shatterTime;
-                        animator.Play("MK_stabJumpFward", 0);
+                        lastAttackMove = "Projectile";
+                        projectileLastTime = Time.time;
+                        lastAttackEndTime = Time.time + projectileTime;
+                        animator.Play("Shout", 0);
+                        fireballLaunchSound.Play();
                         Agent().speed = 0;
+                        
+                        var fireball = Instantiate(launchedObject, launchSource.transform.position, launchSource.transform.rotation);
 
-                        var shatter = Instantiate(shatterObject, transform.position, transform.rotation);
-                        var ps = shatter.GetComponent<ParticleSystem>();
+                        var fireballCollider = fireball.GetComponentInChildren<ThrowCollider>();
+                        fireballCollider.startDelay = throwWindupTime;
+                        
+                        var ps = fireball.GetComponentInChildren<ParticleSystem>();
                         var psMain = ps.main;
-                        psMain.startDelay = shatterWindupTime;
+                        psMain.startDelay = throwWindupTime;
                     }
                 }
             } 
@@ -92,11 +114,8 @@ public class EnemyBossMutant : Enemy
             lastAttackMove = "";
             Agent().speed = agentSpeed;
             offsetAngle = defaultAngle;
+            // SetCollidersDamage(false);
         }
-
-        monkeyRotator.transform.localRotation = Quaternion.RotateTowards(monkeyRotator.transform.localRotation, offsetAngle, 500f * Time.deltaTime);
-        
-        SetWalkingAnimationFromNav();
     }
 
     public override void DoPatrolState()
@@ -107,7 +126,23 @@ public class EnemyBossMutant : Enemy
         }
         else
         {
-            transform.Rotate(0, 1, 0);
+            moveTimer += Time.deltaTime;
+            if (moveTimer > Random.Range(5, 7))
+            {
+                // randomly move enemy while attacking
+                if (Agent().isOnNavMesh)
+                {
+                    if (homeArea == null)
+                    {
+                        Agent().SetDestination(transform.position + (Random.insideUnitSphere * 10));
+                    }
+                    else
+                    {
+                        Agent().SetDestination(homeArea.transform.position + (Random.insideUnitSphere * homeAreaRadius));
+                    }
+                }
+                moveTimer = 0;
+            }
         }
     }
 
@@ -116,17 +151,12 @@ public class EnemyBossMutant : Enemy
         stateMachine.ChangeState(new PatrolState());
     }
 
-    private void SetWalkingAnimationFromNav()
-    {
-        if (Agent().velocity.magnitude > 0.2f && Agent().remainingDistance > 1f)
-        {
-            animator.SetBool("isWalking", true);
-        }
-        else
-        {
-            animator.SetBool("isWalking", true);
-        }
-
-        animator.SetFloat("walkSpeed", Agent().velocity.magnitude / agentSpeed);
-    }
+    // public void SetCollidersDamage(bool doDamage)
+    // {
+    //     isMeleeAttacking = doDamage;
+    //     foreach (var meleeCollider in meleeColliders)
+    //     {
+    //         meleeCollider.damageEnabled = doDamage;
+    //     }
+    // }
 }

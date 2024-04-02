@@ -296,7 +296,7 @@ public class InventoryController : MonoBehaviour
                 ammoCounts["AR"] += amount;
                 ammoCounts["AR"] = Math.Clamp(ammoCounts["AR"], 0, 300);
                 ammoCounts["Pistol"] += amount;
-                ammoCounts["Pistol"] = Math.Clamp(ammoCounts["Pistol"], 0, 60);
+                ammoCounts["Pistol"] = Math.Clamp(ammoCounts["Pistol"], 0, 240);
                 ammoCounts["Shotgun"] += amount;
                 ammoCounts["Shotgun"] = Math.Clamp(ammoCounts["Shotgun"], 0, 180);
                 ammoCounts["Sniper"] += amount;

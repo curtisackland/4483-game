@@ -11,6 +11,9 @@ public class EnemyShootingCyberZombie : EnemyShooting
     public float lowerTime;
     public float agentSpeed;
     private bool weaponIsLowering = false;
+    public AudioSource constantNoise;
+    public AudioSource foundPlayerNoise;
+    public AudioSource gunNoise;
     
     // Update is called once per frame
     public override void Update()
@@ -84,6 +87,7 @@ public class EnemyShootingCyberZombie : EnemyShooting
     {
         if (CanSeePlayer(true))
         {
+            foundPlayerNoise.Play();
             stateMachine.ChangeState(new AttackState());
         }
         
@@ -138,6 +142,8 @@ public class EnemyShootingCyberZombie : EnemyShooting
         Vector3 shootDirection = (Player().transform.position - gunBarrelPosition).normalized;
 
         bullet.GetComponent<Rigidbody>().velocity = Quaternion.AngleAxis(Random.Range(-2f, 2f), Vector3.up) * shootDirection * 100;
+        
+        gunNoise.Play();
     }
     
     private void SetIsMovingAnimation()

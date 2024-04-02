@@ -28,6 +28,8 @@ public class PlayerHealth : MonoBehaviour
     [Header("Damage Overlay")]
     public Image overlay;
 
+    public AudioSource takeDamageSound;
+
     public float duration;
 
     public float fadeSpeed;
@@ -87,7 +89,8 @@ public class PlayerHealth : MonoBehaviour
         health -= damage;
         lerpTimer = 0f;
         overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 0.5f);
-
+        takeDamageSound.Play();
+        
         if (health <= 0)
         {
             StartCoroutine(RestartGame(3f));

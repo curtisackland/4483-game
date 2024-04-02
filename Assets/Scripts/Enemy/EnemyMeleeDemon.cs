@@ -10,13 +10,18 @@ public class EnemyMeleeDemon : EnemyMelee
     private float hitAttackLastTime;
     private float agentSpeed;
     private bool isAttacking = false;
+    public GameObject homeArea;
+    public float homeAreaRadius;
+    public AudioSource constantNoise;
+    public AudioSource foundPlayerNoise;
+    public AudioSource attackNoise;
     
     public override void DoAttackState()
     {
         if (CanSeePlayer(false))
         {
             losePlayerTimer = 0;
-            Agent().SetDestination((transform.position - Player().transform.position).normalized * followDistance + Player().transform.position);
+            SetNavDestinationWithSpace(followDistance);
             LastKnowPos = Player().transform.position;
             if (lastAttackEndTime < Time.time && !isAttacking)
             {
@@ -65,16 +70,24 @@ public class EnemyMeleeDemon : EnemyMelee
     {
         if (CanSeePlayer(true))
         {
+            foundPlayerNoise.Play();
             stateMachine.ChangeState(new AttackState());
         }
 
         moveTimer += Time.deltaTime;
-        if (moveTimer > Random.Range(3, 5))
+        if (moveTimer > Random.Range(5, 7))
         {
             // randomly move enemy while attacking
             if (Agent().isOnNavMesh)
             {
-                Agent().SetDestination(transform.position + (Random.insideUnitSphere * 10));
+                if (homeArea == null)
+                {
+                    Agent().SetDestination(transform.position + (Random.insideUnitSphere * 10));
+                }
+                else
+                {
+                    Agent().SetDestination(homeArea.transform.position + (Random.insideUnitSphere * homeAreaRadius));
+                }
             }
             moveTimer = 0;
         }

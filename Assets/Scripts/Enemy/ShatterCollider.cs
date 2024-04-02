@@ -5,15 +5,25 @@ using UnityEngine;
 
 public class ShatterCollider : MonoBehaviour
 {
+    public GameObject shatterParent;
     public float speed = 1f;
     public float startDelay = 2f;
     public float maxDistance = 15f;
     public float damage = 10f;
     public float knockbackVelocity; 
     public bool damageEnabled = false;
-    
+    public AudioSource startingExplosionSound;
+
+    private bool startedMoving = false;
     private float timeAlive;
     private Vector3 startingPos;
+    private GameObject player;
+    
+    public void Awake()
+    {
+        player = FindFirstObjectByType<PlayerHealth>().gameObject;
+    }
+
     private void Start()
     {
         startingPos = transform.position;
@@ -28,6 +38,13 @@ public class ShatterCollider : MonoBehaviour
         }
         else // Start damaging and moving
         {
+            if (!startedMoving)
+            {
+                startedMoving = true;
+                var originalRot = shatterParent.transform.rotation;
+                shatterParent.transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
+                startingExplosionSound.Play();
+            }
             damageEnabled = true;
             transform.position += transform.forward * (speed * Time.deltaTime);
             if ((startingPos - transform.position).magnitude >= maxDistance)

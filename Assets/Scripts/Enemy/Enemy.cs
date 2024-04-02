@@ -38,9 +38,11 @@ public abstract class Enemy : MonoBehaviour, Damageable
     [SerializeField]
     private string currentState;
 
+    public string enemyName;
+
     [Header("Health and XP Points")]
     public float health = 100f;
-
+    public float maxHealth;
     public float xpWorth = 40f;
 
     public float monsterPointsWorth = 5f;
@@ -52,6 +54,7 @@ public abstract class Enemy : MonoBehaviour, Damageable
         agent = GetComponent<NavMeshAgent>();
         stateMachine.Initialize();
         player = GameObject.FindGameObjectWithTag("Player");
+        maxHealth = health;
     }
 
     // Update is called once per frame
@@ -109,13 +112,29 @@ public abstract class Enemy : MonoBehaviour, Damageable
     public void Damage(float damageAmount)
     {
         health -= damageAmount;
-        
+        stateMachine.ChangeState(new AttackState());
         if (health <= 0)
         {
             PlayerXP p = player.GetComponent<PlayerXP>();
             p.AddXP(xpWorth);
             p.AddMonsterPoints(monsterPointsWorth);
             Destroy(gameObject);
+        }
+    }
+
+    public void SetNavDestinationWithSpace(float stopRadius)
+    {
+        if ((transform.position - Player().transform.position).magnitude > stopRadius && Agent().speed != 0)
+        {
+            Agent().SetDestination(Player().transform.position +
+                                   (transform.position - Player().transform.position).normalized * stopRadius);
+        }
+        else
+        {
+            // When too close to player, just rotate to look at them
+            var dir = (Player().transform.position - transform.position).normalized;
+            Agent().transform.rotation = Quaternion.RotateTowards(Agent().transform.rotation,
+                Quaternion.LookRotation(new Vector3(dir.x, transform.position.y, dir.z)), Agent().angularSpeed * Time.deltaTime);
         }
     }
 }
