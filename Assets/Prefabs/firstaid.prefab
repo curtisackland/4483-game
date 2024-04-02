@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useEvents: 1
-  promptMessage: Heal
+  promptMessage: E to Heal
 --- !u!114 &1663699589504846404
 MonoBehaviour:
   m_ObjectHideFlags: 0

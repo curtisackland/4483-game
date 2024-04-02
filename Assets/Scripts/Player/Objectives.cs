@@ -27,11 +27,11 @@ public class Objectives : MonoBehaviour
         objectiveText = GetComponent<TextMeshProUGUI>();
         objectives = new string[7];
         objectives[0] = "Reach XP level 10";
-        objectives[1] = "Kill the boss Demon in the North East";
+        objectives[1] = "Kill the boss Demon in the North East region";
         objectives[2] = "Reach XP level 20";
-        objectives[3] = "Kill the boss Monkey in the South East";
+        objectives[3] = "Kill the boss Monkey in the South East region";
         objectives[4] = "Reach XP level 30";
-        objectives[5] = "Kill the final boss in the North West";
+        objectives[5] = "Kill the final boss in the West region";
         objectives[6] = "Win the game!";
     }
     
