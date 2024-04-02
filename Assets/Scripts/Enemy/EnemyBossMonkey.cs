@@ -68,7 +68,7 @@ public class EnemyBossMonkey : Enemy
                         Agent().speed = 0;
                         offsetAngle = Quaternion.Euler(0, 220, 0);
                     }
-                    else if (distanceFromPlayer < 15f && shatterLastTime + shatterCooldown < Time.time)
+                    else if (distanceFromPlayer < 30f && shatterLastTime + shatterCooldown < Time.time)
                     {
                         lastAttackMove = "Shatter";
                         shatterLastTime = Time.time;

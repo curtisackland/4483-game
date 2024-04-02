@@ -4752,7 +4752,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -4805,7 +4805,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 12
+      scalar: 24
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -6204,23 +6204,23 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.30336538
         - serializedVersion: 3
-          time: 0.5496758
+          time: 0.20548707
           value: 0.096809044
-          inSlope: -0.95149434
-          outSlope: -0.95149434
+          inSlope: 6.1156297
+          outSlope: 6.1156297
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.15786362
-          outWeight: 0.4731533
+          outWeight: 0.13814616
         - serializedVersion: 3
           time: 0.75063425
           value: 0.058944166
-          inSlope: 24.233873
-          outSlope: 24.233873
+          inSlope: 8.462763
+          outSlope: 8.462763
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.28445765
+          inWeight: 0.18061258
+          outWeight: 0.25394294
         - serializedVersion: 3
           time: 0.99782145
           value: -0.08108008
@@ -38510,11 +38510,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3931646804616213690, guid: 830c1731e0b1bc34ca0d5455294d5afb, type: 3}
       propertyPath: speed
-      value: 15
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 3931646804616213690, guid: 830c1731e0b1bc34ca0d5455294d5afb, type: 3}
       propertyPath: startDelay
-      value: 1.5
+      value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931646804616213690, guid: 830c1731e0b1bc34ca0d5455294d5afb, type: 3}
+      propertyPath: maxDistance
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 3931646804616213690, guid: 830c1731e0b1bc34ca0d5455294d5afb, type: 3}
       propertyPath: shatterParent
