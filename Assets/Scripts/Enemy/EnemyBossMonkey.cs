@@ -12,6 +12,7 @@ public class EnemyBossMonkey : Enemy
     [Header("Whirl Attack")]
     public float fastAttackCooldown = 3f;
     public float fastAttackTime = 2f;
+    public AudioSource fastAttackSound;
     private float fastAttackLastTime;
 
     [Header("Shatter Attack")] 
@@ -19,6 +20,7 @@ public class EnemyBossMonkey : Enemy
     public float shatterCooldown = 15f;
     public float shatterTime = 4f;
     public float shatterWindupTime = 1.5f;
+    public AudioSource shatterAttackSound;
     private float shatterLastTime;
 
     [Header("Attack State")]
@@ -34,6 +36,7 @@ public class EnemyBossMonkey : Enemy
     [FormerlySerializedAs("meleeCollider")] public MeleeTrigger meleeTrigger;
     public GameObject homeArea;
     public float homeAreaRadius;
+    public AudioSource breathingSound;
     
     // Update is called once per frame
     public override void Update()
@@ -43,13 +46,14 @@ public class EnemyBossMonkey : Enemy
     
     public override void DoAttackState()
     {
+        breathingSound.pitch = 0.5f;
         if (CanSeePlayer(false))
         {
             losePlayerTimer = 0;
             // Debug.Log(transform.position);
             // Debug.Log(Player().transform.position + (Player().transform.position - transform.position).normalized * 2f);
             // Debug.Log(Player().transform.position);
-            SetNavDestinationWithSpace(2f);
+            SetNavDestinationWithSpace(1f);
             if (lastAttackMove == "") // No attack is currently happening
             {
                 if (Random.Range(0, 1) < 0.1f) // Randomly start new attack
@@ -104,6 +108,8 @@ public class EnemyBossMonkey : Enemy
 
     public override void DoPatrolState()
     {
+        breathingSound.pitch = 0.35f;
+
         if (CanSeePlayer(true))
         {
             stateMachine.ChangeState(new AttackState());

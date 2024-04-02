@@ -10,6 +10,7 @@ public class PauseMenuController : MonoBehaviour
     public bool isEnd;
     public UIDocument UIDoc;
     public UIDocument endUI;
+    public AudioSource victorySound;
     
     private Button buttonResume;
     private Button buttonExit;
@@ -63,6 +64,7 @@ public class PauseMenuController : MonoBehaviour
         if (ended)
         {
             endUI.rootVisualElement.style.display = DisplayStyle.Flex;
+            victorySound.Play();
         }
         else
         {

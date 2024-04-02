@@ -64,6 +64,7 @@ Enemies:
 Audio:
 - Guns and many different interactions have different audio cues
 - Music throughout the game: in the main menu, ingame, boss music, and victory music
+- Enemies make different sounds like idle, and attacking noises 
 
 ## How to Install
 
@@ -121,3 +122,5 @@ https://assetstore.unity.com/packages/3d/environments/lowpoly-environment-nature
 Base Terrain Kit:
 https://assetstore.unity.com/packages/3d/environments/landscapes/terrain-sample-asset-pack-145808
 
+Most of the game sounds:
+https://freesound.org/

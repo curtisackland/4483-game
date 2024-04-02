@@ -12,6 +12,9 @@ public class EnemyMeleeDemon : EnemyMelee
     private bool isAttacking = false;
     public GameObject homeArea;
     public float homeAreaRadius;
+    public AudioSource constantNoise;
+    public AudioSource foundPlayerNoise;
+    public AudioSource attackNoise;
     
     public override void DoAttackState()
     {
@@ -67,6 +70,7 @@ public class EnemyMeleeDemon : EnemyMelee
     {
         if (CanSeePlayer(true))
         {
+            foundPlayerNoise.Play();
             stateMachine.ChangeState(new AttackState());
         }
 

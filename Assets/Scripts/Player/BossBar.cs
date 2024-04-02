@@ -13,6 +13,7 @@ public class BossBar : MonoBehaviour
     public GameObject player;
     [SerializeField] public List<Enemy> bosses;
     [SerializeField] public List<float> bossbarDistance;
+    public AudioSource bossMusic;
     
     // Start is called before the first frame update
     void Start()
@@ -62,5 +63,6 @@ public class BossBar : MonoBehaviour
     {
         healthbar.gameObject.SetActive(show);
         bossName.gameObject.SetActive(show);
+        bossMusic.enabled = show;
     }
 }

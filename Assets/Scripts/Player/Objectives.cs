@@ -38,7 +38,7 @@ public class Objectives : MonoBehaviour
     void Update()
     {
         objectiveText.text = objectives[completedObjectives];
-        if (completedObjectives == 0 && playerStats.GetXP() >= 1)
+        if (completedObjectives == 0 && playerStats.GetXP() >= 10)
         {
             completedObjectives++;
             demonBossGate.SetActive(false);
@@ -47,7 +47,7 @@ public class Objectives : MonoBehaviour
         {
             // TODO insert boss completion here
             completedObjectives++;
-        } else if (completedObjectives == 2 && playerStats.GetXP() >= 2)
+        } else if (completedObjectives == 2 && playerStats.GetXP() >= 20)
         {
             completedObjectives++;
             monkeyBoss.SetActive(true);
@@ -55,7 +55,7 @@ public class Objectives : MonoBehaviour
         {
             // TODO insert boss completion here
             completedObjectives++;
-        } else if (completedObjectives == 4 && playerStats.GetXP() >= 3)
+        } else if (completedObjectives == 4 && playerStats.GetXP() >= 30)
         {
             completedObjectives++;
             mutantBoss.SetActive(true);

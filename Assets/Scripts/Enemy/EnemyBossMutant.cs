@@ -17,6 +17,7 @@ public class EnemyBossMutant : Enemy
     public float fastAttackCooldown = 3f;
     public float fastAttackTime = 2f;
     public float fastAttackDamage = 10f;
+    public AudioSource fastAttackSound;
     private float fastAttackLastTime;
 
     [Header("Fireball Attack")] 
@@ -26,6 +27,8 @@ public class EnemyBossMutant : Enemy
     public float projectileCooldown = 15f;
     public float projectileTime = 4f;
     [FormerlySerializedAs("shatterWindupTime")] public float throwWindupTime = 0.5f;
+    public AudioSource fireballLaunchSound;
+    public AudioSource fireballAttackSound;
     private float projectileLastTime;
 
     [Header("Attack State")]
@@ -82,6 +85,7 @@ public class EnemyBossMutant : Enemy
                         projectileLastTime = Time.time;
                         lastAttackEndTime = Time.time + projectileTime;
                         animator.Play("Shout", 0);
+                        fireballLaunchSound.Play();
                         Agent().speed = 0;
                         
                         var fireball = Instantiate(launchedObject, launchSource.transform.position, launchSource.transform.rotation);

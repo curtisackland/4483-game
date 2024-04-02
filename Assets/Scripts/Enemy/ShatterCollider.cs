@@ -12,6 +12,7 @@ public class ShatterCollider : MonoBehaviour
     public float damage = 10f;
     public float knockbackVelocity; 
     public bool damageEnabled = false;
+    public AudioSource startingExplosionSound;
 
     private bool startedMoving = false;
     private float timeAlive;
@@ -42,6 +43,7 @@ public class ShatterCollider : MonoBehaviour
                 startedMoving = true;
                 var originalRot = shatterParent.transform.rotation;
                 shatterParent.transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
+                startingExplosionSound.Play();
             }
             damageEnabled = true;
             transform.position += transform.forward * (speed * Time.deltaTime);
