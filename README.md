@@ -2,9 +2,47 @@
 
 Link to Github source code: https://github.com/curtisackland/4483-game
 
-## Features in this Prototype
 
-This a horizontal slice of Apex Extermination: Lone Operative made in Unity. I have added a user interface for player stats (XP and health) and statuses, a custom open world, first person player movement mechanics, player combat mechanics with two types of weapons, and one type of enemy that has custom behaviour and spawning mechanics.
+## How to Install
+
+If you have the Build folder, run the Apex Extermination Lone Operative.exe.
+
+If you don't have the build folder, you will need to open the project in Unity and build it and then run it.
+
+## How to Play
+
+The player will spawn into Area52 in a container with supplies in it.
+The player must eliminate enemies and level up while they explore Area52.
+
+Movement:
+- WASD to move
+- Space to jump
+- Shift to toggle sprint
+- Ctrl to toggle crouch
+
+Interact:
+- Use E to interact
+
+Inventory:
+- TAB to open your inventory. You can move weapons around by dragging and dropping.
+
+Combat:
+- Use mouse to aim
+- Left click to shoot
+- Right click to aim down sights
+- R to reload
+- 1,2,3,4 to swap to that respective weapon
+
+Menu:
+- ESC to bring up the pause menu
+
+
+## Features in this Demo
+
+This version of Apex Extermination: Lone Operative made in Unity.
+We have added a user interface for player stats (XP and health) and statuses, a custom open world, 
+first person player movement mechanics, player combat mechanics with several types of weapons, 
+and several types of enemy that have custom behaviour and spawning mechanics.
 
 User Interface:
 - Health bar that chips away health when damaged or healed
@@ -25,10 +63,11 @@ User Interface:
 
 Open World:
 - Big open world that the player can explore
-- Custom generated terrain with hills, mountains, trees, and buildings
+- Custom terrain with hills, mountains, trees, and buildings
 - The player's base is a cargo container that they can go to get health (healthpack), ammo (ammo crate), and buy weapons from the store (large wooden crate/container below the ammo crate). It is also used as a safe place where the player can open and close the door to protect themselves
 - There is smoke around the map to indicate health and ammo stations
 - There are three boss areas
+  - Additional enemies spawn 
 
 Player:
 - Player can move around, sprint, crouch, jump
@@ -66,41 +105,19 @@ Audio:
 - Music throughout the game: in the main menu, ingame, boss music, and victory music
 - Enemies make different sounds like idle, and attacking noises 
 
-## How to Install
-
-If you have the Build folder, run the Apex Extermination Lone Operative.exe.
-
-If you don't have the build folder, you will need to open the project in Unity and build it and then run it.
-
-## How to Play
-
-The player will spawn into Area52 in a container with supplies in it. The player must eliminate enemies and level up while they explore Area52.
-
-Movement:
-- WASD to move
-- Space to jump
-- Shift to toggle sprint
-- Ctrl to toggle crouch
-
-Interact:
-- Use E to interact
-
-Inventory:
-- TAB to open your inventory. You can move weapons around by dragging and dropping.
-
-Combat:
-- Use mouse to aim
-- Left click to shoot
-- Right click to aim down sights
-- R to reload
-- 1,2,3,4 to swap to that respective weapon
-
-Menu:
-- ESC to bring up the pause menu
-
 ## Challenges
 
-We are all still beginners with Unity so we were exposed to many new technologies through this project that we had to learn to put this game together. This took weeks of work to put all together however we are happy with the results and it should be easy to add more features in the future, if we want to, with how we have the project setup. The most difficult challenge I had was making shooting look decent. I wanted to be able to aim down sites or hip fire with bullet tracers coming from the barrel of the gun while the actual raycast to hit enemies came from the main camera so it would point to where the player was actually looking. This was hard to line up between hip fire state and aim down site state all while making the animation look smooth between states. The custom recoil system was also hard to get right. It was hard to make each different gun have an appropriate recoil. The inventory system was also a challenge and decent chunk of work. Getting the drag and drop feature to work along with storing multiple different guns took some planning and reorganizing, but in the end worked out really well. Animations for the enemies and bosses were extremely challenging to get right and work correctly so that the enemies actually felt like they were attacking the player. Balancing/tuning weapons, monster health, xp, weapon costs, and enemy stats took a long time to find a place where everything felt even.
+We are all still beginners with Unity so we were exposed to many new technologies through this project that we had to learn to put this game together.
+This took weeks of work to put all together however we are happy with the results and it should be easy to add more features in the future, if we want to, with how we have the project setup.
+The most difficult challenge I had was making shooting look decent.
+I wanted to be able to aim down sites or hip fire with bullet tracers coming from the barrel of the gun while the actual raycast to hit enemies came from the main camera so it would point to where the player was actually looking.
+This was hard to line up between hip fire state and aim down site state all while making the animation look smooth between states.
+The custom recoil system was also hard to get right.
+It was hard to make each different gun have an appropriate recoil.
+The inventory system was also a challenge and decent chunk of work.
+Getting the drag and drop feature to work along with storing multiple different guns took some planning and reorganizing, but in the end worked out really well.
+Animations for the enemies and bosses were extremely challenging to get right and work correctly so that the enemies actually felt like they were attacking the player.
+Balancing/tuning weapons, monster health, xp, weapon costs, and enemy stats took a long time to find a place where everything felt even.
 
 ## Resources
 
