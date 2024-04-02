@@ -5,7 +5,7 @@ using UnityEngine;
 public class StoreInteractable : Interactable
 {
     public GameObject store;
-
+    public AudioSource openStoreSound;
     public bool isStoreActive = false;
 
     [SerializeField]
@@ -28,6 +28,7 @@ public class StoreInteractable : Interactable
             UnityEngine.Cursor.visible = true;
             promptMessage = "";
             store.SetActive(true);
+            openStoreSound.Play();
         }
     }
     

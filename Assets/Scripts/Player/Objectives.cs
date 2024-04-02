@@ -12,8 +12,11 @@ public class Objectives : MonoBehaviour
     public PlayerXP playerStats;
     public GameObject demonBossGate;
     public GameObject demonBoss;
+    public SpawnEnemyInRadius demonBossExtraSpawner;
     public GameObject monkeyBoss;
+    public SpawnEnemyInRadius monkeyBossExtraSpawner;
     public GameObject mutantBoss;
+    public SpawnEnemyInRadius mutantBossExtraSpawner;
     
     
     private TextMeshProUGUI objectiveText;
@@ -45,7 +48,7 @@ public class Objectives : MonoBehaviour
             demonBoss.SetActive(true);
         } else if (completedObjectives == 1 && demonBoss.IsDestroyed())
         {
-            // TODO insert boss completion here
+            demonBossExtraSpawner.gameObject.SetActive(false);
             completedObjectives++;
         } else if (completedObjectives == 2 && playerStats.GetXP() >= 20)
         {
@@ -53,7 +56,7 @@ public class Objectives : MonoBehaviour
             monkeyBoss.SetActive(true);
         } else if (completedObjectives == 3 && monkeyBoss.IsDestroyed())
         {
-            // TODO insert boss completion here
+            monkeyBossExtraSpawner.gameObject.SetActive(false);
             completedObjectives++;
         } else if (completedObjectives == 4 && playerStats.GetXP() >= 30)
         {
@@ -61,7 +64,7 @@ public class Objectives : MonoBehaviour
             mutantBoss.SetActive(true);
         } else if (completedObjectives == 5 && mutantBoss.IsDestroyed())
         {
-            // TODO insert boss completion here
+            mutantBossExtraSpawner.gameObject.SetActive(false);
             completedObjectives++;
             endGameMenu.isEnd = true;
         }

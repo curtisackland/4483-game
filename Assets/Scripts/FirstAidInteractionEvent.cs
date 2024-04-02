@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class InteractionEvent : MonoBehaviour
 {
     private PlayerHealth playerHealth;
+    public AudioSource healSound;
     public void Awake()
     {
         playerHealth = FindFirstObjectByType<PlayerHealth>();
@@ -14,6 +15,7 @@ public class InteractionEvent : MonoBehaviour
         OnInteract.AddListener(() =>
         {
             playerHealth.RestoreHealth(100);
+            healSound.Play();
         });
     }
 

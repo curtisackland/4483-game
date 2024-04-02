@@ -7,6 +7,8 @@ public class OpenCloseDoor : Interactable
 {
     [SerializeField]
     private GameObject door;
+    public AudioSource doorOpenSound;
+    public AudioSource doorCloseSound;
 
     private bool doorOpen;
     
@@ -18,9 +20,11 @@ public class OpenCloseDoor : Interactable
         if (doorOpen)
         {
             promptMessage = "Close Door";
+            doorOpenSound.Play();
         }
         else
         {
+            doorCloseSound.Play();
             promptMessage = "Open Door";
         }
     }

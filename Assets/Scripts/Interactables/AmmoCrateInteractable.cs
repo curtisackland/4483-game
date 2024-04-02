@@ -12,6 +12,8 @@ public class AmmoCrateInteractable : Interactable
 
     public string ammoType;
 
+    public AudioSource refillSound;
+
     public void Awake()
     {
         inventory = FindFirstObjectByType<InventoryController>();
@@ -20,5 +22,6 @@ public class AmmoCrateInteractable : Interactable
     protected override void Interact()
     {
         inventory.UpdateAmmo(ammoType, refillAmount);
+        refillSound.Play();
     }
 }
