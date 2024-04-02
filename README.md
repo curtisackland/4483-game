@@ -7,7 +7,7 @@ Link to Github source code: https://github.com/curtisackland/4483-game
 
 If you have the Build folder, run the Apex Extermination Lone Operative.exe.
 
-If you don't have the build folder, you will need to open the project in Unity and build it and then run it.
+If you don't have the build folder, you will need to open the project in Unity 2022.3.9f1, build and then run the game.
 
 ## How to Play
 
@@ -95,15 +95,16 @@ Enemies:
 - Each enemy has a different ability like: shooting, a lot of health, or have fast movement
 - When the player moves out of their field of view they will travel to the player's last known position and search around that area.
 - Enemy spawning:
-    - Maximum of 20 enemies can be in the world
+    - Maximum of 20 enemies can spawn around the player
     - Enemies randomly spawn between a maximum radius and minimum radius from the player so they do not spawn too far or too close
     - When an enemy becomes too far away from the player they will despawn
-    - More enemies can spawn in the boss areas
+    - Additional enemies can spawn in the boss areas
 
 Audio:
 - Guns and many different interactions have different audio cues
 - Music throughout the game: in the main menu, ingame, boss music, and victory music
-- Enemies make different sounds like idle, and attacking noises 
+- Enemies make different sounds like idle, and attacking noises
+- Interactable items have sound like the container doors, store, ammo refill, and first aid pack
 
 ## Challenges
 
@@ -140,4 +141,13 @@ Base Terrain Kit:
 https://assetstore.unity.com/packages/3d/environments/landscapes/terrain-sample-asset-pack-145808
 
 Most of the game sounds:
-https://freesound.org/
+https://freesound.org/\
+
+Main Menu Music:
+https://www.youtube.com/watch?v=FdCVU4vF1ZU
+
+Boss Battle Music:
+https://www.youtube.com/watch?v=U8FczHSlKBo
+
+Victory Music:
+https://www.youtube.com/watch?v=hXR1361koMo
